@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "Minecraft Lab",
-  "current_scope": "road car baseline 1.1.0",
+  "current_scope": "road car 1.1.0 steering + interior view",
   "release_policy": {
     "ready_requires_all_p0": true,
     "aggregate_test_count_is_not_release_evidence": true
@@ -48,8 +48,8 @@
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "C-008: 1.0.0 field test showed lateral glide/strafe and no real left-right steering.",
-        "1.1.0 uses follow_orbit + player_relative control scheme, which maps left/right input to rotation; device proof pending."
+        "1.0.0 Android field: steering/yaw failed and lateral slide observed.",
+        "1.1.0 adds explicit InputInfo steering -> Entity.setRotation + anti-slip damping; device proof pending."
       ]
     },
     {
@@ -63,23 +63,22 @@
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "C-005/C-009: earlier builds had obstructed interior or forced third-person.",
-        "1.1.0 uses near-zero follow_orbit radius 0.12 with forward entity offset to place camera near the windshield; device proof pending."
+        "Forced third-person rejected by user.",
+        "1.1.0 removes forced third-person, clears stale camera override, and moves driver seat forward; first-person device proof pending."
       ]
     },
     {
       "id": "A-P0-005",
-      "title": "Road terrain policy",
+      "title": "Road terrain behavior",
       "priority": "P0",
-      "acceptance": "Baseline road car traverses slabs/half-block transitions but does not auto-climb full 1-block walls; 4x4 is a separate later variant.",
+      "acceptance": "Road car crosses slabs/small irregularities but does not climb full one-block ledges; 4x4 is a separate future vehicle class.",
       "required_evidence": [
         "RUNTIME_PASS",
         "DEVICE_PASS"
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "C-010: user chose separation between normal road car and special 4x4 class.",
-        "1.1.0 max auto-step is 0.50 block; device road feel pending."
+        "1.1.0 road auto-step capped at 0.5625; device proof pending."
       ]
     },
     {

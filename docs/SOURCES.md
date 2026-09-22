@@ -1,23 +1,32 @@
-# Minecraft Lab — Source Registry
+# Minecraft Lab — Sources / decisions
 
-## Integrated
-- RMPlaysMCYT Minecraft Bedrock Vehicle Template — MIT. Geometry/texture/animations reused with attribution.
+## REUSE — RMPlaysMCYT Minecraft Bedrock Vehicle Template
+- MIT.
+- Reused geometry, texture, wheel/steering animations.
+- Original horse/saddle behavior is NOT reused.
 
-## Official decisions used in 1.1.0
-### Microsoft Control Schemes
-- player_relative: left/right rotates; forward/back moves relative to facing.
-- player_relative_strafe / locked_player_relative_strafe: left/right strafes.
-- built-in camera presets default to locked player relative strafe.
-Decision: use custom minecraft:follow_orbit preset with control_scheme=player_relative.
+## ADAPT — official Microsoft Bedrock APIs
+- InputInfo.getMovementVector(): current touch/controller/keyboard movement vector.
+- Entity.setRotation(): explicit body yaw steering.
+- Entity.getVelocity()/applyImpulse(): anti-slip correction.
+- minecraft:friction_modifier: in format >=1.26.20, higher values correctly increase ground friction.
+- minecraft:input_ground_controlled: retained for Bedrock-native propulsion/collision.
+- minecraft:variable_max_auto_step: road-car limit 0.5625.
 
-### Microsoft Third Person Camera Preset
-- follow_orbit supports radius down to 0.1 and entity/view offsets.
-Decision: use radius 0.12 and forward entity offset to approximate cockpit perspective without forcing the ordinary chase camera.
+## REFERENCE_ONLY — MinerYuri/myv
+- GPL-3.0.
+- Inspected for current 1.26-era use of Player.inputInfo and vehicle terrain concepts.
+- No GPL source code copied. Minecraft Lab steering implementation is independently written from Microsoft API contracts.
 
-### Microsoft input_ground_controlled
-- official rideable WASD/touch ground control component retained.
+## REFERENCE_ONLY — Defence: Trooper 4x4
+- Current 26.x community benchmark for rough-terrain + dedicated vehicle camera.
+- No compatible reuse licence established in this run; no files copied.
 
-## Community references
-- MinerYuri/myv (GPL-3.0): modern 1.26 car entity also uses minecraft:input_ground_controlled and 1-block auto-step. No GPL code copied.
-- Defence: Trooper 4x4: reference-only for specialized off-road class.
-- The Typical Prius (MIT): feature benchmark only; no files imported in this run.
+## BENCHMARK — The Typical Prius by rbmasterchief
+- CurseForge lists MIT.
+- Current 26.40-era vehicle with modeled interior, animations and four-passenger capacity.
+- Used as a functional benchmark; files not imported in this run.
+
+## Product split
+- Road Car = current 1.1.0, road/slab behavior.
+- 4x4 = separate future vehicle class; do not make normal cars climb full blocks.

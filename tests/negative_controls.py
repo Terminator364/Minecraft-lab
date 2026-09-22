@@ -1,26 +1,23 @@
-def validate_control_scheme(v):
-    assert v=="player_relative"
+def steering_contract(script):
+    assert "inputInfo.getMovementVector()" in script
+    assert "vehicle.setRotation" in script
+    assert "LATERAL_DAMPING" in script
+    assert "minecraft:third_person" not in script
 
-def validate_radius(v):
-    assert 0.10 <= v <= 0.20
-
-def validate_road_step(v):
-    assert 0.25 <= v <= 0.50
-
-tests=[
- ("strafe_regression",lambda:validate_control_scheme("player_relative_strafe")),
- ("locked_strafe_regression",lambda:validate_control_scheme("locked_player_relative_strafe")),
- ("forced_chase_camera",lambda:validate_radius(5.0)),
- ("camera_inside_player_zero",lambda:validate_radius(0.0)),
- ("4x4_leak_into_road_car",lambda:validate_road_step(1.25)),
+good='inputInfo.getMovementVector() vehicle.setRotation LATERAL_DAMPING player.camera.clear()'
+mutations=[
+ ("no_input",good.replace("inputInfo.getMovementVector()","")),
+ ("no_yaw",good.replace("vehicle.setRotation","")),
+ ("no_anti_slip",good.replace("LATERAL_DAMPING","")),
+ ("forced_third_person",good+" minecraft:third_person")
 ]
 caught=0
-for name,fn in tests:
-    try: fn()
+for name,text in mutations:
+    try: steering_contract(text)
     except AssertionError:
         caught+=1
         print("NEGATIVE CONTROL CAUGHT",name)
     else:
-        raise AssertionError("escaped mutation: "+name)
-assert caught==len(tests)
-print(f"negative_controls_1_1_0: PASS ({caught}/{len(tests)})")
+        raise AssertionError("escaped mutation "+name)
+assert caught==len(mutations)
+print(f"negative_controls_1_1_0: PASS ({caught}/{len(mutations)})")

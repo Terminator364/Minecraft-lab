@@ -1,3 +1,3 @@
-entity.minecraft_lab:vehicle.name=Minecraft Lab Road Car
-item.minecraft_lab:vehicle_item.name=Minecraft Lab Road Car
+entity.minecraft_lab:vehicle.name=Minecraft Lab Car
+item.minecraft_lab:vehicle_item.name=Minecraft Lab Car
 action.minecraft_lab.drive=Drive

@@ -1,149 +1,148 @@
 {
-  "schema_version": 2,
+  "schema_version": 1,
   "project": "Minecraft Lab",
   "release": "1.1.0",
+  "product_class": "road_car",
   "families": [
-    {
-      "id": "STEER-001",
-      "requirement_id": "A-P0-003",
-      "source_requirement": [
-        "C-008"
-      ],
-      "precondition": "driver mounted",
-      "action": "press left while moving",
-      "expected_result": "vehicle yaws left; no lateral translation as primary response",
-      "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "player_relative_strafe would reproduce lateral glide",
-      "status": "PENDING_DEVICE"
-    },
-    {
-      "id": "STEER-002",
-      "requirement_id": "A-P0-003",
-      "source_requirement": [
-        "C-008"
-      ],
-      "precondition": "driver mounted",
-      "action": "press right while moving",
-      "expected_result": "vehicle yaws right; no lateral translation as primary response",
-      "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "locked_player_relative_strafe would permit strafe",
-      "status": "PENDING_DEVICE"
-    },
-    {
-      "id": "STEER-003",
-      "requirement_id": "A-P0-003",
-      "source_requirement": [
-        "B"
-      ],
-      "precondition": "camera preset loaded",
-      "action": "inspect control_scheme",
-      "expected_result": "player_relative",
-      "oracle": "STATIC",
-      "evidence_class": "STATIC_PASS",
-      "negative_control": "replace with player_relative_strafe => test fails",
-      "status": "PASS"
-    },
-    {
-      "id": "CAMERA-001",
-      "requirement_id": "A-P0-004",
-      "source_requirement": [
-        "C-005",
-        "C-009"
-      ],
-      "precondition": "driver mounts",
-      "action": "camera applies",
-      "expected_result": "cockpit-like near-zero follow orbit",
-      "oracle": "STATIC",
-      "evidence_class": "STATIC_PASS",
-      "negative_control": "radius >= 3 would become chase camera",
-      "status": "PASS"
-    },
-    {
-      "id": "CAMERA-002",
-      "requirement_id": "A-P0-004",
-      "source_requirement": [
-        "C-005",
-        "C-009"
-      ],
-      "precondition": "driver mounted",
-      "action": "look forward",
-      "expected_result": "road occupies majority of forward view; no forced exterior chase view",
-      "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "1.0.0 third_person screenshot",
-      "status": "PENDING_DEVICE"
-    },
-    {
-      "id": "ROAD-001",
-      "requirement_id": "A-P0-005",
-      "source_requirement": [
-        "C-010"
-      ],
-      "precondition": "road car on slab transition",
-      "action": "drive forward",
-      "expected_result": "cross 0.5-block transition",
-      "oracle": "POLICY",
-      "evidence_class": "STATIC_PASS",
-      "negative_control": "0.0625 would reject slab",
-      "status": "PASS"
-    },
-    {
-      "id": "ROAD-002",
-      "requirement_id": "A-P0-005",
-      "source_requirement": [
-        "C-010"
-      ],
-      "precondition": "road car faces full block wall",
-      "action": "drive forward",
-      "expected_result": "does not auto-climb 1-block wall",
-      "oracle": "POLICY",
-      "evidence_class": "STATIC_PASS",
-      "negative_control": "1.25 would act as 4x4",
-      "status": "PASS"
-    },
-    {
-      "id": "ROAD-003",
-      "requirement_id": "A-P0-005",
-      "source_requirement": [
-        "C-010"
-      ],
-      "precondition": "real Android terrain",
-      "action": "drive on road/slabs/full-block ledge",
-      "expected_result": "road-car behavior matches policy",
-      "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "former 4x4 build",
-      "status": "PENDING_DEVICE"
-    },
     {
       "id": "INSTALL-001",
       "requirement_id": "A-P0-001",
-      "source_requirement": [
-        "C-007"
-      ],
-      "precondition": "single mcaddon",
-      "action": "open with Minecraft",
-      "expected_result": "one-click import",
-      "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "two .mcpack.zip files",
+      "oracle": "PACKAGE",
+      "scenario": "single mcaddon contains BP+RP",
       "status": "PASS"
     },
     {
       "id": "ICON-001",
       "requirement_id": "A-P0-002",
-      "source_requirement": [
-        "C-004"
-      ],
-      "precondition": "creative inventory",
-      "action": "search vehicle",
-      "expected_result": "visible mapped icon",
+      "oracle": "STATIC",
+      "scenario": "current icon component resolves through item_texture mapping",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-STEER-L",
+      "requirement_id": "A-P0-003",
+      "oracle": "MODEL",
+      "scenario": "forward + left input changes yaw one direction",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-STEER-R",
+      "requirement_id": "A-P0-003",
+      "oracle": "MODEL",
+      "scenario": "forward + right input changes yaw opposite direction",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-REVERSE",
+      "requirement_id": "A-P0-003",
+      "oracle": "MODEL",
+      "scenario": "reverse steering sign is inverted",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-NOSTRAFE",
+      "requirement_id": "A-P0-003",
+      "oracle": "MODEL",
+      "scenario": "lateral velocity is damped toward zero",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-STRAIGHT",
+      "requirement_id": "A-P0-003",
+      "oracle": "MODEL",
+      "scenario": "zero steer preserves yaw",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-DEVICE",
+      "requirement_id": "A-P0-003",
       "oracle": "DEVICE",
-      "evidence_class": "DEVICE_PASS",
-      "negative_control": "missing atlas mapping",
-      "status": "PASS_FIELD_PRIOR"
+      "scenario": "Android left/right produces visible car yaw and curved trajectory",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "CAMERA-001",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "no code forces minecraft:third_person",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-002",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "mount clears previous camera override",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-003",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "driver seat is forward-biased toward windscreen",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-DEVICE",
+      "requirement_id": "A-P0-004",
+      "oracle": "DEVICE",
+      "scenario": "first-person view exposes road while retaining cabin feel",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "ROAD-001",
+      "requirement_id": "A-P0-005",
+      "oracle": "STATIC",
+      "scenario": "road auto-step <= 0.5625",
+      "status": "PASS"
+    },
+    {
+      "id": "ROAD-002",
+      "requirement_id": "A-P0-005",
+      "oracle": "POLICY",
+      "scenario": "full one-block ledge is not road-car terrain",
+      "status": "PASS"
+    },
+    {
+      "id": "ROAD-DEVICE",
+      "requirement_id": "A-P0-005",
+      "oracle": "DEVICE",
+      "scenario": "flat road/slab movement works while full block stops car",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "FRICTION-001",
+      "requirement_id": "A-P0-003",
+      "oracle": "STATIC",
+      "scenario": "format >=1.26.20 + friction_modifier=2.0",
+      "status": "PASS"
+    },
+    {
+      "id": "HORSE-001",
+      "requirement_id": "A-P0-003",
+      "oracle": "STATIC",
+      "scenario": "horse/tame/saddle/jump components absent",
+      "status": "PASS"
+    },
+    {
+      "id": "REUSE-001",
+      "requirement_id": "A-P0-006",
+      "oracle": "STATIC",
+      "scenario": "MIT vehicle geometry remains attributed",
+      "status": "PASS"
+    },
+    {
+      "id": "SOURCE-INPUT",
+      "requirement_id": "A-P0-006",
+      "oracle": "STATIC",
+      "scenario": "steering architecture informed by current InputInfo API and community vehicle implementations",
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-001",
+      "requirement_id": "A-P0-009",
+      "oracle": "STATIC",
+      "scenario": "device gates remain pending until phone evidence",
+      "status": "PASS"
     }
   ]
 }

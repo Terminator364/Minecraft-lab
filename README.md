@@ -1,14 +1,25 @@
 # Minecraft Lab — Road Car 1.1.0
 
-This release directly addresses the Android field regression where the previous chase camera caused left/right strafing instead of steering.
+This build directly addresses the Android field failure where the car moved but did not actually steer.
 
-Core decisions:
-- standard car = road car, max auto-step 0.50 block;
-- dedicated 4x4 becomes a separate later class;
-- cockpit-like camera = custom follow_orbit radius 0.12;
-- control scheme = player_relative so left/right rotates instead of strafes;
-- camera anchor shifted toward windshield for forward visibility;
-- one-click .mcaddon preserved.
+## Driving model
+- Bedrock-native ground propulsion/collision remains active.
+- Touch left/right explicitly changes vehicle body yaw.
+- Sideways velocity is damped so steering is not strafing.
+- Reverse steering flips naturally.
+- Ground friction = 2.0 using corrected 1.26.20 semantics.
 
-Device acceptance for this release is intentionally narrow:
-left steer, right steer, forward/reverse, cockpit visibility, slab/road behavior.
+## View
+- Forced third-person has been removed.
+- Mounting restores normal Minecraft camera behavior.
+- Driver seat is moved toward the windscreen to improve the in-cabin view.
+- The player may use normal perspective switching.
+
+## Terrain
+This is now explicitly a ROAD CAR:
+- slabs/small road irregularities: target;
+- full one-block climbing: not target.
+A 4x4 will be a separate vehicle class.
+
+User-facing installable:
+MinecraftLab-RoadCar-1.1.0.mcaddon

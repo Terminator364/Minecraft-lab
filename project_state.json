@@ -1,19 +1,20 @@
 {
   "project": "Minecraft Lab",
-  "scope": "road car baseline",
+  "scope": "road car",
   "release": "1.1.0",
   "status": "CANDIDATE_FIELD",
-  "policy": "A+B+C / semantic anticipations / reuse-first",
-  "regression_fixed_in_design": [
-    "C-008 lateral strafe",
-    "C-009 forced chase view",
-    "C-010 road-vs-4x4 ambiguity"
+  "policy": "A+B+C / semantic anticipation / reuse-first",
+  "known_field_failures_closed_in_code": [
+    "C-008 steering yaw",
+    "C-009 lateral slide",
+    "C-010 forced third-person",
+    "C-011 road-vs-4x4 ambiguity"
   ],
-  "device_gates": [
-    "left steering yaw",
-    "right steering yaw",
-    "cockpit visibility",
-    "road/slab terrain feel"
+  "device_gates_pending": [
+    "left/right yaw + curved path",
+    "first-person windscreen visibility",
+    "road/slab vs full-block behavior",
+    "icon render"
   ],
-  "delivery_rule": "One .mcaddon only"
+  "delivery_rule": "one mcaddon only"
 }

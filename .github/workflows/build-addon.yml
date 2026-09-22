@@ -24,24 +24,27 @@ jobs:
           PY
       - name: A+B+C truth gate
         run: python tests/spec_coverage.py
-      - name: Road car QA
-        run: python tests/production_qa.py
+      - name: Road car contract
+        run: python tests/road_car_contract.py
+      - name: Steering model
+        run: python tests/driving_model.py
       - name: JavaScript syntax
-        run: node --check packs/behavior_pack/scripts/driver_camera.js
+        run: node --check packs/behavior_pack/scripts/road_car.js
       - name: Negative controls
         run: python tests/negative_controls.py
-      - name: Package one-click
+      - name: One-click package
         run: |
           rm -rf dist staging
           mkdir -p dist staging/bp staging/rp
           cp -R packs/behavior_pack/. staging/bp/
+          rm -f staging/bp/scripts/driver_camera.js
           cp -R packs/resource_pack/. staging/rp/
           (cd staging/bp && zip -qr ../../dist/MinecraftLab-RoadCar-BP-1.1.0.mcpack .)
           (cd staging/rp && zip -qr ../../dist/MinecraftLab-RoadCar-RP-1.1.0.mcpack .)
           (cd dist && zip -q MinecraftLab-RoadCar-1.1.0.mcaddon MinecraftLab-RoadCar-BP-1.1.0.mcpack MinecraftLab-RoadCar-RP-1.1.0.mcpack)
           unzip -t dist/MinecraftLab-RoadCar-1.1.0.mcaddon
           sha256sum dist/MinecraftLab-RoadCar-1.1.0.mcaddon > dist/SHA256SUMS.txt
-      - name: Upload
+      - name: Upload candidate
         uses: actions/upload-artifact@v4
         with:
           name: MinecraftLab-RoadCar-1.1.0
