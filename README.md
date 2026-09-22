@@ -5,7 +5,7 @@ Current candidate: **v0.4.0**
 This build is driven directly by Android field findings from v0.3.0.
 
 ## v0.4 fixes
-- Creative inventory: explicit Equipment > Minecarts registration plus crafting item catalog.
+- Creative inventory: explicit Items > Minecarts registration plus crafting item catalog.
 - Hotbar icon: Mojang's proven vanilla minecart_normal icon replaces the unreliable custom icon path.
 - Camera: dedicated follow-orbit driver camera applied automatically while riding and cleared after dismount.
 - First-person fallback: large cabin/body bones hidden when the render context reports first-person.

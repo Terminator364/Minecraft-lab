@@ -2,7 +2,7 @@ import copy
 
 def validate_item(item):
     menu = item["description"]["menu_category"]
-    assert menu["category"] == "equipment"
+    assert menu["category"] == "items"
     assert menu["group"] == "minecraft:itemGroup.name.minecart"
     assert item["components"]["minecraft:icon"]["texture"] == "minecart_normal"
     assert item["components"]["minecraft:entity_placer"]["entity"] == "minecraft_lab:vehicle"
@@ -14,7 +14,7 @@ def validate_vehicle(components):
     assert max(step.values()) <= 0.0625
 
 GOOD_ITEM = {
-    "description": {"menu_category": {"category": "equipment","group": "minecraft:itemGroup.name.minecart"}},
+    "description": {"menu_category": {"category": "items","group": "minecraft:itemGroup.name.minecart"}},
     "components": {
         "minecraft:icon": {"texture": "minecart_normal"},
         "minecraft:entity_placer": {"entity": "minecraft_lab:vehicle"}

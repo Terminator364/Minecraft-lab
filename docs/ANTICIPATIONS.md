@@ -8,7 +8,7 @@ It is not a repeated counter and not a marketing number.
 - BP/RP versions and dependency match.
 - package structure valid.
 - placement item command-visible.
-- item explicitly registered in Creative Equipment > Minecarts.
+- item explicitly registered in Creative Items > Minecarts.
 - crafting item catalog independently includes the item.
 - item points to the correct vehicle entity.
 - no custom atlas dependency is required for the v0.4 item icon.

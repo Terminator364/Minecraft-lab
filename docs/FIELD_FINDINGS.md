@@ -12,7 +12,7 @@ Status: GUARDED by max auto-step <= 0.0625 block.
 Observed on Android v0.3.0: /give succeeds, but searching "voiture" in Creative inventory does not reliably surface the item.
 v0.4 response:
 - item format 1.21.60;
-- explicit Equipment category;
+- explicit Items category;
 - explicit vanilla Minecart group;
 - explicit crafting item catalog entry;
 - command visibility explicitly enabled.

@@ -50,7 +50,7 @@ assert max(step.values()) <= 0.0625
 assert client.get("spawn_egg") is None
 assert item_doc["format_version"] == "1.21.60"
 menu = item["description"]["menu_category"]
-assert menu["category"] == "equipment"
+assert menu["category"] == "items"
 assert menu["group"] == "minecraft:itemGroup.name.minecart"
 assert menu["is_hidden_in_commands"] is False
 assert item["components"]["minecraft:entity_placer"]["entity"] == "minecraft_lab:vehicle"
@@ -59,7 +59,7 @@ assert item["components"]["minecraft:icon"]["texture"] == "minecart_normal"
 cats = catalog["minecraft:crafting_items_catalog"]["categories"]
 minecart_items = []
 for cat in cats:
-    if cat["category_name"] == "equipment":
+    if cat["category_name"] == "items":
         for group in cat["groups"]:
             if group.get("group_identifier", {}).get("name") == "minecraft:itemGroup.name.minecart":
                 minecart_items.extend(group["items"])
