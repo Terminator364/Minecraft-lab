@@ -76,8 +76,16 @@ jobs:
           sed -i 's/^level-name=.*/level-name=RoadCarTest/' server.properties
           sed -i 's/^online-mode=.*/online-mode=false/' server.properties
 
-          # First boot creates a valid Bedrock world.
-          { sleep 5; echo stop; } | env LD_LIBRARY_PATH=. ./bedrock_server > first_boot.log 2>&1 || true
+          # First boot creates a valid Bedrock world. Never allow BDS itself to hang CI.
+          set +e
+          timeout --signal=INT 20s env LD_LIBRARY_PATH=. ./bedrock_server > first_boot.log 2>&1
+          FIRST_STATUS=$?
+          set -e
+          if [ "$FIRST_STATUS" -ne 0 ] && [ "$FIRST_STATUS" -ne 124 ] && [ "$FIRST_STATUS" -ne 130 ]; then
+            cat first_boot.log
+            exit "$FIRST_STATUS"
+          fi
+          test -d "worlds/RoadCarTest"
 
           mkdir -p behavior_packs/MinecraftLabRoadCar_BP
           mkdir -p resource_packs/MinecraftLabRoadCar_RP
@@ -97,7 +105,14 @@ jobs:
               encoding="utf-8")
           PY
 
-          { sleep 7; echo list; sleep 1; echo stop; } | env LD_LIBRARY_PATH=. ./bedrock_server > pack_boot.log 2>&1
+          set +e
+          timeout --signal=INT 20s env LD_LIBRARY_PATH=. ./bedrock_server > pack_boot.log 2>&1
+          PACK_STATUS=$?
+          set -e
+          if [ "$PACK_STATUS" -ne 0 ] && [ "$PACK_STATUS" -ne 124 ] && [ "$PACK_STATUS" -ne 130 ]; then
+            cat pack_boot.log
+            exit "$PACK_STATUS"
+          fi
           cat pack_boot.log
 
           if grep -Eiq 'failed to load.*pack|invalid.*manifest|unknown.*component|json.*error|syntax error' pack_boot.log; then
