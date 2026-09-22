@@ -68,7 +68,7 @@ jobs:
           BDS_URL="https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-${BDS_VERSION}.zip"
 
           mkdir -p bds
-          curl --fail --location --retry 2 --output bds/server.zip "$BDS_URL"
+          curl --http1.1 --fail --location --retry 4 --retry-delay 2 --retry-all-errors --output bds/server.zip "$BDS_URL"
           unzip -q bds/server.zip -d bds
           chmod +x bds/bedrock_server
 
