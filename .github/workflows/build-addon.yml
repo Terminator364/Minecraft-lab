@@ -70,6 +70,15 @@ jobs:
             dist/SHA256SUMS.txt
           if-no-files-found: error
 
+      - name: Upload one-click mcaddon payload
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinecraftLab-RoadCar-v0.4.0-ONECLICK
+          path: |
+            dist/01-MinecraftLab-RoadCar-RP-v0.4.0.mcpack
+            dist/02-MinecraftLab-RoadCar-BP-v0.4.0.mcpack
+          if-no-files-found: error
+
       # Each Actions artifact is itself a ZIP. Uploading pack CONTENTS directly
       # means the downloaded artifact ZIP is already a valid mcpack byte-for-byte.
       - name: Upload direct RP payload
