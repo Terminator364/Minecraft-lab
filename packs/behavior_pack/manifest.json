@@ -1,0 +1,23 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Minecraft Lab Vehicle BP",
+    "description": "Minimal rideable vehicle prototype",
+    "uuid": "e7e4d5f8-8f95-4e74-9e90-15e649c01f90",
+    "version": [0, 1, 0],
+    "min_engine_version": [1, 21, 80]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "35bf4a16-5556-4a34-9bd0-20c867b485c4",
+      "version": [0, 1, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "6a55a02d-40c3-41a6-8458-189d6d9f51bc",
+      "version": [0, 1, 0]
+    }
+  ]
+}

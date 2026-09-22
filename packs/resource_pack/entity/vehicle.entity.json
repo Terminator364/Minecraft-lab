@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft_lab:vehicle",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/blocks/iron_block"
+      },
+      "geometry": {
+        "default": "geometry.minecraft_lab.vehicle"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#6F747A",
+        "overlay_color": "#22262A"
+      }
+    }
+  }
+}

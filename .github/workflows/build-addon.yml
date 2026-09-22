@@ -1,0 +1,50 @@
+name: Build Minecraft Add-On
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path("packs").rglob("*.json"))
+          if not files:
+              raise SystemExit("No JSON files found")
+          for path in files:
+              with path.open("r", encoding="utf-8") as f:
+                  json.load(f)
+              print("OK", path)
+          PY
+
+      - name: Build mcaddon
+        shell: bash
+        run: |
+          mkdir -p dist staging/MinecraftLabVehicle_BP staging/MinecraftLabVehicle_RP
+          cp -R packs/behavior_pack/. staging/MinecraftLabVehicle_BP/
+          cp -R packs/resource_pack/. staging/MinecraftLabVehicle_RP/
+          (
+            cd staging
+            zip -qr ../dist/MinecraftLab-Vehicle-v0.1.0.mcaddon MinecraftLabVehicle_BP MinecraftLabVehicle_RP
+          )
+          sha256sum dist/MinecraftLab-Vehicle-v0.1.0.mcaddon > dist/SHA256SUMS.txt
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinecraftLab-Vehicle-v0.1.0
+          path: dist/*
+          if-no-files-found: error
