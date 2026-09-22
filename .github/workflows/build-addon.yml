@@ -33,6 +33,9 @@ jobs:
       - name: Vehicle contract gate
         run: python tests/vehicle_contract.py
 
+      - name: JavaScript syntax gate
+        run: node --check packs/behavior_pack/scripts/driver_camera.js
+
       - name: Negative controls
         run: python tests/negative_controls.py
 
