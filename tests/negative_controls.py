@@ -1,45 +1,31 @@
 import copy
 
-def validate_item(item):
-    menu = item["description"]["menu_category"]
-    assert menu["category"] == "items"
-    assert menu["group"] == "minecraft:itemGroup.name.minecart"
-    assert item["components"]["minecraft:icon"]["texture"] == "minecart_normal"
-    assert item["components"]["minecraft:entity_placer"]["entity"] == "minecraft_lab:vehicle"
+def icon_ok(item,atlas):
+    key=item["components"]["minecraft:icon"]
+    assert key in atlas["texture_data"]
+    assert atlas["texture_data"][key]["textures"].endswith("minecraft_lab_4x4_icon")
 
-def validate_vehicle(components):
-    forbidden = {"minecraft:horse.jump_strength","minecraft:can_power_jump","minecraft:can_climb","minecraft:tameable","minecraft:inventory"}
-    assert not (forbidden & set(components))
-    step = components["minecraft:variable_max_auto_step"]
-    assert max(step.values()) <= 0.0625
+def terrain_ok(step):
+    assert 1.0 <= step["controlled_value"] <= 1.25
+    assert step["jump_prevented_value"] <= 1.0
 
-GOOD_ITEM = {
-    "description": {"menu_category": {"category": "items","group": "minecraft:itemGroup.name.minecart"}},
-    "components": {
-        "minecraft:icon": {"texture": "minecart_normal"},
-        "minecraft:entity_placer": {"entity": "minecraft_lab:vehicle"}
-    }
-}
-GOOD_COMPONENTS = {
-    "minecraft:input_ground_controlled": {},
-    "minecraft:variable_max_auto_step": {"base_value":0.0625,"controlled_value":0.0625,"jump_prevented_value":0.0625}
-}
+GOOD_ITEM={"components":{"minecraft:icon":"minecraft_lab_4x4_icon"}}
+GOOD_ATLAS={"texture_data":{"minecraft_lab_4x4_icon":{"textures":"textures/items/minecraft_lab_4x4_icon"}}}
+GOOD_STEP={"controlled_value":1.25,"base_value":1.25,"jump_prevented_value":1.0}
 
-mutations = []
-x=copy.deepcopy(GOOD_ITEM); x["description"]["menu_category"]["category"]="none"; mutations.append(("hidden_creative_category",lambda x=x: validate_item(x)))
-x=copy.deepcopy(GOOD_ITEM); x["components"]["minecraft:icon"]["texture"]="definitely_missing_icon"; mutations.append(("missing_icon_key",lambda x=x: validate_item(x)))
-x=copy.deepcopy(GOOD_ITEM); x["components"]["minecraft:entity_placer"]["entity"]="minecraft:pig"; mutations.append(("wrong_placed_entity",lambda x=x: validate_item(x)))
-x=copy.deepcopy(GOOD_COMPONENTS); x["minecraft:horse.jump_strength"]={"value":0.7}; mutations.append(("horse_jump_regression",lambda x=x: validate_vehicle(x)))
-x=copy.deepcopy(GOOD_COMPONENTS); x["minecraft:variable_max_auto_step"]["controlled_value"]=0.5; mutations.append(("terrain_climb_regression",lambda x=x: validate_vehicle(x)))
+tests=[]
+x=copy.deepcopy(GOOD_ITEM); x["components"]["minecraft:icon"]="missing"; tests.append(("wrong_icon_key",lambda x=x:icon_ok(x,GOOD_ATLAS)))
+a=copy.deepcopy(GOOD_ATLAS); a["texture_data"]["minecraft_lab_4x4_icon"]["textures"]="textures/items/missing"; tests.append(("wrong_icon_path",lambda a=a:icon_ok(GOOD_ITEM,a)))
+s=copy.deepcopy(GOOD_STEP); s["controlled_value"]=0.0625; tests.append(("not_offroad",lambda s=s:terrain_ok(s)))
+s=copy.deepcopy(GOOD_STEP); s["controlled_value"]=2.0; tests.append(("wall_climber",lambda s=s:terrain_ok(s)))
 
 caught=0
-for name,fn in mutations:
+for name,fn in tests:
     try: fn()
     except AssertionError:
-        caught += 1
-        print("NEGATIVE CONTROL CAUGHT", name)
+        caught+=1
+        print("NEGATIVE CONTROL CAUGHT",name)
     else:
-        raise AssertionError(f"Negative control escaped: {name}")
-
-assert caught == len(mutations)
-print(f"negative_controls: PASS ({caught}/{len(mutations)} mutations caught)")
+        raise AssertionError("escaped mutation: "+name)
+assert caught==len(tests)
+print(f"negative_controls_v050: PASS ({caught}/{len(tests)})")

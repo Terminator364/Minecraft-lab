@@ -1,29 +1,32 @@
 # Minecraft Lab — ANTICIPATIONS
 
-## Canonical definition
-An anticipation is one concrete, traceable pre-delivery scenario/test intended to catch a real user-visible failure before the installable reaches the phone.
-It is not a repeated counter and not a marketing number.
+An anticipation is one concrete, traceable pre-delivery scenario/test intended to catch a real user-visible failure.
 
-## v0.4 mandatory gates
-- BP/RP versions and dependency match.
-- package structure valid.
-- placement item command-visible.
-- item explicitly registered in Creative Items > Minecarts.
-- crafting item catalog independently includes the item.
-- item points to the correct vehicle entity.
-- no custom atlas dependency is required for the v0.4 item icon.
-- Mojang vanilla minecart_normal icon key used.
-- localized name exists FR/EN.
-- no spawn egg exposed.
-- no horse/taming/breeding/jump/inventory components.
-- max auto-step <= 0.0625.
-- custom driver camera preset exists.
-- script module depends on @minecraft/server 2.0.0.
-- riding detection uses minecraft:riding.
-- camera set on entering and cleared on exit.
-- first-person render fallback hides cabin bones that blocked Android view.
+## v0.5 gates
+### Icon
+- custom icon key exists in item definition;
+- same key exists in item_texture.json;
+- mapped PNG exists;
+- PNG is exactly 64x64 RGBA;
+- meaningful opaque pixel count > 10%;
+- transparent background exists;
+- mutated missing/wrong icon key must fail.
 
-## Evidence classes
-STATIC_PASS: file/schema/semantic gates passed.
-BDS_PASS: official Bedrock Dedicated Server loaded candidate without relevant content errors.
-DEVICE_PENDING: visual/touch/camera behavior still requires the real Android client.
+### Camera
+- riding detection uses minecraft:riding;
+- third-person camera is applied while riding;
+- camera is reasserted periodically;
+- command fallback exists;
+- camera clears on dismount;
+- driver seat Y >= 1.0 as a physical visibility fallback.
+
+### 4x4
+- controlled auto-step between 1.0 and 1.25 blocks;
+- one-block ledge is policy PASS;
+- slabs/snow/rough block-by-block mound are PASS;
+- vertical 2-block wall is policy FAIL;
+- no horse/taming/jump mechanics are introduced.
+
+### Delivery
+- one-click mcaddon exists and contains BP+RP;
+- old versions do not remain in À installer.

@@ -1,14 +1,14 @@
 {
   "format_version": 2,
-  "metadata": {"authors": ["Minecraft Lab"], "product_type": "addon"},
+  "metadata": {"authors":["Minecraft Lab"],"product_type":"addon"},
   "header": {
-    "name": "Minecraft Lab Road Car RP",
-    "description": "Road-focused car resources v0.4.0",
+    "name": "Minecraft Lab 4x4 RP",
+    "description": "Off-road 4x4 resources v0.5.0",
     "uuid": "6a55a02d-40c3-41a6-8458-189d6d9f51bc",
-    "version": [0, 4, 0],
-    "min_engine_version": [1, 26, 0]
+    "version": [0,5,0],
+    "min_engine_version": [1,26,0]
   },
   "modules": [
-    {"type": "resources", "uuid": "61f2a312-bde8-42a0-b019-1fb0a72dce31", "version": [0, 4, 0]}
+    {"type":"resources","uuid":"61f2a312-bde8-42a0-b019-1fb0a72dce31","version":[0,5,0]}
   ]
 }

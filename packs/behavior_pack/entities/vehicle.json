@@ -8,32 +8,17 @@
       "is_experimental": false
     },
     "components": {
-      "minecraft:type_family": {
-        "family": ["minecraft_lab_vehicle", "vehicle", "car"]
-      },
-      "minecraft:collision_box": {
-        "width": 2.75,
-        "height": 1.65
-      },
-      "minecraft:health": {
-        "value": 40,
-        "max": 40
-      },
-      "minecraft:movement": {
-        "value": 0.30
-      },
-      "minecraft:movement.basic": {
-        "max_turn": 10.0
-      },
+      "minecraft:type_family": {"family":["minecraft_lab_vehicle","vehicle","car","offroad_4x4"]},
+      "minecraft:collision_box": {"width":2.75,"height":1.70},
+      "minecraft:health": {"value":60,"max":60},
+      "minecraft:movement": {"value":0.34},
+      "minecraft:movement.basic": {"max_turn":12.0},
       "minecraft:variable_max_auto_step": {
-        "base_value": 0.0625,
-        "controlled_value": 0.0625,
-        "jump_prevented_value": 0.0625
+        "base_value": 1.25,
+        "controlled_value": 1.25,
+        "jump_prevented_value": 1.0
       },
-      "minecraft:physics": {
-        "has_collision": true,
-        "push_towards_closest_space": false
-      },
+      "minecraft:physics": {"has_collision":true,"push_towards_closest_space":false},
       "minecraft:input_ground_controlled": {},
       "minecraft:rideable": {
         "seat_count": 2,
@@ -44,26 +29,12 @@
         "interact_text": "action.minecraft_lab.drive",
         "dismount_mode": "on_top_center",
         "seats": [
-          {
-            "position": [0.50, 0.55, 0.0]
-          },
-          {
-            "position": [-0.50, 0.55, 0.0]
-          }
+          {"position":[0.50,1.10,-0.15],"lock_rider_rotation":0},
+          {"position":[-0.50,1.10,-0.15],"lock_rider_rotation":0}
         ]
       },
-      "minecraft:pushable": {
-        "is_pushable": false,
-        "is_pushable_by_piston": false
-      },
-      "minecraft:damage_sensor": {
-        "triggers": [
-          {
-            "cause": "fall",
-            "deals_damage": "no"
-          }
-        ]
-      },
+      "minecraft:pushable": {"is_pushable":false,"is_pushable_by_piston":false},
+      "minecraft:damage_sensor": {"triggers":[{"cause":"fall","deals_damage":"no"}]},
       "minecraft:nameable": {}
     }
   }
