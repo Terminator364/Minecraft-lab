@@ -1,18 +1,14 @@
 {
   "project": "Minecraft Lab",
-  "scope": "4x4 vehicle",
+  "scope": "4x4 car",
+  "release": "1.0.0",
   "status": "CANDIDATE_FIELD",
-  "head_sha": "e436d6214fa3828c68ab4648200e201df8a55c21",
-  "policy": "A+B+C / MERGE+REFINE+PRESERVE",
-  "blocking_requirements": [
-    "A-P0-002",
-    "A-P0-003",
-    "A-P0-004",
-    "A-P0-005",
-    "A-P0-008"
+  "head_parent": "238c0ed058c478743bc8dab71b636d2e6c5c08e5",
+  "policy": "A+B+C / semantic anticipations / reuse-first",
+  "blocked_until_device_evidence": [
+    "A-P0-002 icon render",
+    "A-P0-004 driver visibility",
+    "A-P0-005 physical 4x4 terrain"
   ],
-  "notes": [
-    "Raw anticipation execution counts are not maturity scores.",
-    "V0.5 is not READY until visual/device gates close."
-  ]
+  "delivery_rule": "One .mcaddon only"
 }

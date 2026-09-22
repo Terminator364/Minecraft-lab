@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "project": "Minecraft Lab",
+  "release": "1.0.0",
+  "families": [
+    {
+      "id": "INSTALL-001",
+      "requirement_id": "A-P0-001",
+      "oracle": "PACKAGE",
+      "scenario": "one mcaddon contains BP+RP",
+      "expected": "single installable archive",
+      "status": "PASS"
+    },
+    {
+      "id": "ICON-001",
+      "requirement_id": "A-P0-002",
+      "oracle": "STATIC",
+      "scenario": "item icon key matches item_texture mapping",
+      "expected": "exact key match",
+      "status": "PASS"
+    },
+    {
+      "id": "ICON-002",
+      "requirement_id": "A-P0-002",
+      "oracle": "VISUAL_PROXY",
+      "scenario": "icon PNG is RGBA 64x64, non-empty, transparent background",
+      "expected": "recognizable nonblank asset",
+      "status": "PASS"
+    },
+    {
+      "id": "ICON-003",
+      "requirement_id": "A-P0-002",
+      "oracle": "DEVICE",
+      "scenario": "creative inventory renders icon",
+      "expected": "visible 4x4 icon",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "INV-001",
+      "requirement_id": "A-P0-002",
+      "oracle": "STATIC",
+      "scenario": "item registered in Items > Minecarts and catalog",
+      "expected": "searchable creative item",
+      "status": "PASS"
+    },
+    {
+      "id": "PLACE-001",
+      "requirement_id": "A-P0-002",
+      "oracle": "STATIC",
+      "scenario": "item entity_placer points to vehicle",
+      "expected": "places minecraft_lab:vehicle",
+      "status": "PASS"
+    },
+    {
+      "id": "HORSE-001",
+      "requirement_id": "A-P0-003",
+      "oracle": "STATIC",
+      "scenario": "forbidden horse/tame/saddle/jump components absent",
+      "expected": "no horse UX components",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-001",
+      "requirement_id": "A-P0-003",
+      "oracle": "STATIC",
+      "scenario": "ground input and controlling seat configured",
+      "expected": "mobile ground controls wired",
+      "status": "PASS"
+    },
+    {
+      "id": "CONTROL-002",
+      "requirement_id": "A-P0-003",
+      "oracle": "DEVICE",
+      "scenario": "steer/forward/reverse on Android",
+      "expected": "usable driving",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "CAMERA-001",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "stable third_person preset used",
+      "expected": "no experimental camera dependency",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-002",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "camera reasserted and cleared on exit",
+      "expected": "outside driving view + recovery",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-003",
+      "requirement_id": "A-P0-004",
+      "oracle": "VISUAL_PROXY",
+      "scenario": "visual entity scale bounds are car-like",
+      "expected": "scaled width<2.3, height<2.6, length<4.5 blocks",
+      "status": "PASS"
+    },
+    {
+      "id": "CAMERA-004",
+      "requirement_id": "A-P0-004",
+      "oracle": "DEVICE",
+      "scenario": "Android driving view shows useful road area",
+      "expected": "cabin does not dominate view",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "TERRAIN-001",
+      "requirement_id": "A-P0-005",
+      "oracle": "STATIC",
+      "scenario": "controlled auto-step in 4x4 range",
+      "expected": "1.0-1.25 blocks",
+      "status": "PASS"
+    },
+    {
+      "id": "TERRAIN-002",
+      "requirement_id": "A-P0-005",
+      "oracle": "POLICY",
+      "scenario": "1-block ledge / rough mound",
+      "expected": "pass",
+      "status": "PASS"
+    },
+    {
+      "id": "TERRAIN-003",
+      "requirement_id": "A-P0-005",
+      "oracle": "POLICY",
+      "scenario": "2-block vertical wall",
+      "expected": "blocked",
+      "status": "PASS"
+    },
+    {
+      "id": "TERRAIN-004",
+      "requirement_id": "A-P0-005",
+      "oracle": "DEVICE",
+      "scenario": "Android 1-block transition and progressive mound",
+      "expected": "passes without horse jump",
+      "status": "PENDING_DEVICE"
+    },
+    {
+      "id": "SCALE-001",
+      "requirement_id": "A-P0-004",
+      "oracle": "STATIC",
+      "scenario": "source geometry bbox scaled by minecraft:scale",
+      "expected": "car-like dimensions",
+      "status": "PASS"
+    },
+    {
+      "id": "SEAT-001",
+      "requirement_id": "A-P0-003",
+      "oracle": "STATIC",
+      "scenario": "4 seats inside scaled vehicle envelope",
+      "expected": "driver+3 passengers",
+      "status": "PASS"
+    },
+    {
+      "id": "REUSE-001",
+      "requirement_id": "A-P0-006",
+      "oracle": "STATIC",
+      "scenario": "MIT vehicle template retained with attribution",
+      "expected": "reuse-first provenance",
+      "status": "PASS"
+    },
+    {
+      "id": "PROV-001",
+      "requirement_id": "A-P0-007",
+      "oracle": "STATIC",
+      "scenario": "license/source registry present",
+      "expected": "traceable integrated assets",
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-001",
+      "requirement_id": "A-P0-009",
+      "oracle": "STATIC",
+      "scenario": "device-dependent requirements remain pending until device evidence",
+      "expected": "no false READY",
+      "status": "PASS"
+    }
+  ]
+}

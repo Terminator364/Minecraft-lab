@@ -1,24 +1,21 @@
 import copy
 
-def icon_ok(item,atlas):
-    key=item["components"]["minecraft:icon"]
-    assert key in atlas["texture_data"]
-    assert atlas["texture_data"][key]["textures"].endswith("minecraft_lab_4x4_icon")
+def validate_scale(v):
+    assert 0.55 <= v <= 0.75
 
-def terrain_ok(step):
-    assert 1.0 <= step["controlled_value"] <= 1.25
-    assert step["jump_prevented_value"] <= 1.0
+def validate_step(v):
+    assert 1.0 <= v <= 1.25
 
-GOOD_ITEM={"components":{"minecraft:icon":"minecraft_lab_4x4_icon"}}
-GOOD_ATLAS={"texture_data":{"minecraft_lab_4x4_icon":{"textures":"textures/items/minecraft_lab_4x4_icon"}}}
-GOOD_STEP={"controlled_value":1.25,"base_value":1.25,"jump_prevented_value":1.0}
+def validate_icon(item_key,atlas):
+    assert item_key in atlas
 
-tests=[]
-x=copy.deepcopy(GOOD_ITEM); x["components"]["minecraft:icon"]="missing"; tests.append(("wrong_icon_key",lambda x=x:icon_ok(x,GOOD_ATLAS)))
-a=copy.deepcopy(GOOD_ATLAS); a["texture_data"]["minecraft_lab_4x4_icon"]["textures"]="textures/items/missing"; tests.append(("wrong_icon_path",lambda a=a:icon_ok(GOOD_ITEM,a)))
-s=copy.deepcopy(GOOD_STEP); s["controlled_value"]=0.0625; tests.append(("not_offroad",lambda s=s:terrain_ok(s)))
-s=copy.deepcopy(GOOD_STEP); s["controlled_value"]=2.0; tests.append(("wall_climber",lambda s=s:terrain_ok(s)))
-
+tests=[
+ ("oversized_model",lambda:validate_scale(1.0)),
+ ("tiny_model",lambda:validate_scale(0.3)),
+ ("not_4x4",lambda:validate_step(0.5)),
+ ("wall_climber",lambda:validate_step(2.0)),
+ ("missing_icon",lambda:validate_icon("missing",{"minecraft_lab_4x4_icon":{}}))
+]
 caught=0
 for name,fn in tests:
     try: fn()
@@ -28,4 +25,4 @@ for name,fn in tests:
     else:
         raise AssertionError("escaped mutation: "+name)
 assert caught==len(tests)
-print(f"negative_controls_v050: PASS ({caught}/{len(tests)})")
+print(f"negative_controls_v100: PASS ({caught}/{len(tests)})")

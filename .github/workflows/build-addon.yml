@@ -7,10 +7,11 @@ permissions:
   contents: read
 
 jobs:
-  vehicle-gates:
+  production-gates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Validate JSON
         run: |
           python - <<'PY'
@@ -19,34 +20,39 @@ jobs:
           for p in sorted(Path("packs").rglob("*.json")):
               json.load(p.open(encoding="utf-8"))
               print("JSON OK",p)
+          json.load(open("spec/anticipations.json",encoding="utf-8"))
+          json.load(open("spec/requirements.json",encoding="utf-8"))
           PY
-      - name: Canonical spec truth gate
+
+      - name: A+B+C truth gate
         run: python tests/spec_coverage.py
 
-      - name: Contract
-        run: python tests/vehicle_contract.py
+      - name: Production QA
+        run: python tests/production_qa.py
+
       - name: JavaScript syntax
         run: node --check packs/behavior_pack/scripts/driver_camera.js
+
       - name: Negative controls
         run: python tests/negative_controls.py
-      - name: Anticipations
-        run: python tests/anticipation_matrix.py
-      - name: Package
+
+      - name: Package one-click mcaddon
         run: |
           rm -rf dist staging
           mkdir -p dist staging/bp staging/rp
           cp -R packs/behavior_pack/. staging/bp/
           cp -R packs/resource_pack/. staging/rp/
-          (cd staging/bp && zip -qr ../../dist/MinecraftLab-4x4-BP-v0.5.0.mcpack .)
-          (cd staging/rp && zip -qr ../../dist/MinecraftLab-4x4-RP-v0.5.0.mcpack .)
-          (cd dist && zip -q MinecraftLab-4x4-v0.5.0.mcaddon MinecraftLab-4x4-BP-v0.5.0.mcpack MinecraftLab-4x4-RP-v0.5.0.mcpack)
-          unzip -t dist/MinecraftLab-4x4-v0.5.0.mcaddon
-          sha256sum dist/MinecraftLab-4x4-v0.5.0.mcaddon > dist/SHA256SUMS.txt
-      - name: Upload candidate
+          (cd staging/bp && zip -qr ../../dist/MinecraftLab-4x4-Car-BP-1.0.0.mcpack .)
+          (cd staging/rp && zip -qr ../../dist/MinecraftLab-4x4-Car-RP-1.0.0.mcpack .)
+          (cd dist && zip -q MinecraftLab-4x4-Car-1.0.0.mcaddon MinecraftLab-4x4-Car-BP-1.0.0.mcpack MinecraftLab-4x4-Car-RP-1.0.0.mcpack)
+          unzip -t dist/MinecraftLab-4x4-Car-1.0.0.mcaddon
+          sha256sum dist/MinecraftLab-4x4-Car-1.0.0.mcaddon > dist/SHA256SUMS.txt
+
+      - name: Upload production candidate
         uses: actions/upload-artifact@v4
         with:
-          name: MinecraftLab-4x4-v0.5.0
+          name: MinecraftLab-4x4-Car-1.0.0
           path: |
-            dist/MinecraftLab-4x4-v0.5.0.mcaddon
+            dist/MinecraftLab-4x4-Car-1.0.0.mcaddon
             dist/SHA256SUMS.txt
           if-no-files-found: error

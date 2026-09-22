@@ -1,27 +1,32 @@
 # Minecraft Lab — Source Registry
 
-## Integrated
-### RMPlaysMCYT Minecraft Bedrock Vehicle Template
+## INTEGRATED — RMPlaysMCYT Minecraft Bedrock Vehicle Template
 - Source: https://github.com/RMPlaysMCYT/Minecraft-Bedrock-Vehicle-Template
+- Author: Ronnel "RMPlaysMCYT" Mitra
 - License: MIT
-- Reused: Bedrock car geometry, texture and movement/steering animation definitions.
-- Attribution retained in licenses/RMPLAYS_VEHICLE_TEMPLATE_MIT.txt.
+- Integrated: car geometry, texture, wheel/steering movement animations.
+- Minecraft Lab adaptations: entity behavior, scaling, collision, seats, icon, camera, 4x4 traversal and mobile UX.
+- Full MIT notice retained in licenses/RMPLAYS_VEHICLE_TEMPLATE_MIT.txt.
 
-## Official technical references
-- Microsoft Creator: Crafting Item Catalog / menu_category.
-- Microsoft Creator: custom item icon mapping via item_texture.json.
-- Microsoft Creator: minecraft:variable_max_auto_step.
-- Microsoft Creator: Camera / third-person camera.
-- Microsoft Creator: EntityRidingComponent and minecraft:riding.
+## OFFICIAL TECHNICAL BASELINE
+- Microsoft Creator docs: minecraft:icon uses keys from resource_pack/textures/item_texture.json.
+- Microsoft Creator docs: minecraft:third_person is a built-in camera preset; custom follow-orbit/boom presets can require Creator Camera experimental toggles, so 1.0.0 deliberately avoids that dependency.
+- Microsoft Creator docs: minecraft:scale is the visual size multiplier.
+- Microsoft Creator docs: minecraft:variable_max_auto_step defines controlled automatic step height.
 
-## Community design references (not copied)
-### Defence: Trooper 4x4 — LBRStudio / CurseForge
-- Current 1.26-era Bedrock addon.
-- Publicly documents rough-terrain driving and a dedicated third-person vehicle camera.
-- Used only as evidence of expected UX/architecture because no compatible reuse license was established in this run.
+## COMMUNITY REFERENCE — no copied code/assets
+### Defence: Trooper 4x4 — LBRStudio
+- Current Bedrock 26.x add-on.
+- Publicly documents rough-terrain driving, driver/passenger seating, dedicated third-person vehicle camera, cargo/fuel/HUD.
+- Used as a UX/architecture reference only; no compatible reuse licence was established during this run.
 
-### The Typical Prius / other modern vehicle packs
-- Used for UX comparison only unless a permissive license is explicitly recorded.
+### The Typical Prius — rbmasterchief
+- Current Bedrock 26.x add-on.
+- CurseForge lists MIT license.
+- Public description documents fully modeled interior, animations, six variants and four-passenger capacity.
+- Used as a feature/reference benchmark in this run; its files were not imported.
 
-## Rule
-Public availability is not treated as permission to copy. Permissive assets are integrated with attribution; restrictive/unclear sources are reference-only.
+## POLICY
+Permissive source -> may REUSE/ADAPT with attribution.
+Restrictive/unclear source -> REFERENCE_ONLY.
+Public availability alone is never treated as permission to copy.

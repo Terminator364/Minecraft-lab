@@ -3,7 +3,7 @@ import { world, system } from "@minecraft/server";
 const VEHICLE_ID = "minecraft_lab:vehicle";
 const active = new Set();
 
-function vehicleFor(player) {
+function riddenVehicle(player) {
   try {
     const riding = player.getComponent("minecraft:riding");
     const entity = riding?.entityRidingOn;
@@ -13,7 +13,9 @@ function vehicleFor(player) {
   }
 }
 
-function forceDriverCamera(player) {
+function applyDrivingView(player) {
+  // Use the stable built-in third-person preset. This keeps the camera outside
+  // the cabin and avoids requiring experimental custom-camera toggles.
   try {
     player.camera.setCamera("minecraft:third_person");
   } catch {
@@ -22,8 +24,10 @@ function forceDriverCamera(player) {
   try { player.runCommand("hud @s hide horse_health"); } catch {}
 }
 
-function restoreCamera(player) {
-  try { player.camera.clear(); } catch {
+function restoreNormalView(player) {
+  try {
+    player.camera.clear();
+  } catch {
     try { player.runCommand("camera @s clear"); } catch {}
   }
   try { player.runCommand("hud @s reset horse_health"); } catch {}
@@ -33,11 +37,13 @@ system.runInterval(() => {
   const seen = new Set();
   for (const player of world.getAllPlayers()) {
     seen.add(player.id);
-    if (vehicleFor(player)) {
-      forceDriverCamera(player); // reassert; do not rely on one transition event
+    if (riddenVehicle(player)) {
+      // Reassert periodically: Android clients can reset perspective during
+      // mount/chunk transitions.
+      applyDrivingView(player);
       active.add(player.id);
     } else if (active.delete(player.id)) {
-      restoreCamera(player);
+      restoreNormalView(player);
     }
   }
   for (const id of [...active]) {
@@ -45,8 +51,11 @@ system.runInterval(() => {
   }
 }, 10);
 
-world.afterEvents.playerSpawn.subscribe(({player}) => {
+world.afterEvents.playerSpawn.subscribe(({ player }) => {
   system.run(() => {
-    if (!vehicleFor(player)) restoreCamera(player);
+    if (!riddenVehicle(player)) {
+      restoreNormalView(player);
+      active.delete(player.id);
+    }
   });
 });
