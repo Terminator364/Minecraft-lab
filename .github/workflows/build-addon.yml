@@ -20,6 +20,9 @@ jobs:
               json.load(p.open(encoding="utf-8"))
               print("JSON OK",p)
           PY
+      - name: Canonical spec truth gate
+        run: python tests/spec_coverage.py
+
       - name: Contract
         run: python tests/vehicle_contract.py
       - name: JavaScript syntax

@@ -1,0 +1,18 @@
+{
+  "project": "Minecraft Lab",
+  "scope": "4x4 vehicle",
+  "status": "CANDIDATE_FIELD",
+  "head_sha": "e436d6214fa3828c68ab4648200e201df8a55c21",
+  "policy": "A+B+C / MERGE+REFINE+PRESERVE",
+  "blocking_requirements": [
+    "A-P0-002",
+    "A-P0-003",
+    "A-P0-004",
+    "A-P0-005",
+    "A-P0-008"
+  ],
+  "notes": [
+    "Raw anticipation execution counts are not maturity scores.",
+    "V0.5 is not READY until visual/device gates close."
+  ]
+}

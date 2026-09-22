@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "project": "Minecraft Lab",
+  "current_scope": "4x4 vehicle",
+  "release_policy": {
+    "ready_requires_all_p0": true,
+    "aggregate_test_count_is_not_release_evidence": true
+  },
+  "requirements": [
+    {
+      "id": "A-P0-001",
+      "title": "Installation one-click",
+      "priority": "P0",
+      "acceptance": "One .mcaddon opens with Minecraft and imports both packs without manual ZIP handling.",
+      "required_evidence": [
+        "STATIC_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "DEVICE_PASS",
+      "evidence": [
+        "C-007 Android field result: v0.4 one-click mcaddon imported correctly."
+      ]
+    },
+    {
+      "id": "A-P0-002",
+      "title": "Visible identifiable item",
+      "priority": "P0",
+      "acceptance": "Search by vehicle name returns an item with a visible recognizable icon; placement works without cheats.",
+      "required_evidence": [
+        "STATIC_PASS",
+        "VISUAL_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "PARTIAL",
+      "evidence": [
+        "Creative registration works; v0.4 icon failed visually; v0.5 contains mapped PNG but device render not yet proven."
+      ]
+    },
+    {
+      "id": "A-P0-003",
+      "title": "Vehicle controls",
+      "priority": "P0",
+      "acceptance": "Player can mount, steer and move using mobile controls without horse/taming UX.",
+      "required_evidence": [
+        "RUNTIME_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "PARTIAL",
+      "evidence": [
+        "Horse/taming components absent statically; mobile steering observed in earlier field builds."
+      ]
+    },
+    {
+      "id": "A-P0-004",
+      "title": "Driver visibility",
+      "priority": "P0",
+      "acceptance": "Default driving view exposes useful forward and lateral environment; cabin does not dominate the screen.",
+      "required_evidence": [
+        "VISUAL_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "FAIL",
+      "evidence": [
+        "v0.4 Android screenshots show cabin/geometry still obstructing view."
+      ]
+    },
+    {
+      "id": "A-P0-005",
+      "title": "4x4 terrain",
+      "priority": "P0",
+      "acceptance": "Vehicle crosses ordinary 1-block transitions and progressive rough mounds; vertical 2-block walls remain non-traversable.",
+      "required_evidence": [
+        "RUNTIME_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "PARTIAL",
+      "evidence": [
+        "v0.5 policy/config allows 1.25-block auto-step; real Android terrain traversal not yet proven."
+      ]
+    },
+    {
+      "id": "A-P0-006",
+      "title": "Reuse before invention",
+      "priority": "P0",
+      "acceptance": "Each major subsystem has a source/adoption review before BUILD_ONLY_IF_GAP.",
+      "required_evidence": [
+        "STATIC_PASS"
+      ],
+      "current_status": "STATIC_PASS",
+      "evidence": [
+        "Source registry contains integrated MIT template and community reference set."
+      ]
+    },
+    {
+      "id": "A-P0-007",
+      "title": "Provenance",
+      "priority": "P0",
+      "acceptance": "Every reused asset records source, author, license and integration scope.",
+      "required_evidence": [
+        "STATIC_PASS"
+      ],
+      "current_status": "STATIC_PASS",
+      "evidence": [
+        "docs/SOURCES.md and retained MIT license."
+      ]
+    },
+    {
+      "id": "A-P0-008",
+      "title": "Semantic anticipations",
+      "priority": "P0",
+      "acceptance": "Every counted anticipation maps to requirement_id + scenario + oracle + expected + evidence class; pure cartesian repetitions are reported separately and do not inflate coverage.",
+      "required_evidence": [
+        "STATIC_PASS"
+      ],
+      "current_status": "UNTESTED",
+      "evidence": []
+    },
+    {
+      "id": "A-P0-009",
+      "title": "Truthful release gate",
+      "priority": "P0",
+      "acceptance": "READY is forbidden while any P0 is FAIL, PARTIAL or UNTESTED.",
+      "required_evidence": [
+        "STATIC_PASS"
+      ],
+      "current_status": "STATIC_PASS",
+      "evidence": [
+        "This registry makes v0.5 a CANDIDATE, not READY."
+      ]
+    }
+  ]
+}
