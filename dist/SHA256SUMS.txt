@@ -1,1 +1,1 @@
-d7c5a84315a8408b0c648c7700611a25bd1c189a4268439b5ba8cae8aa340145  MinecraftLab-Vehicle-v0.1.0.mcaddon
+1b8666d366259e7e496594a03e21add12d0f8ff7714131defe227c84fb4ee54c  MinecraftLab-Vehicle-v0.1.0.mcaddon

@@ -30,21 +30,34 @@ jobs:
               print("OK", path)
           PY
 
-      - name: Build mcaddon
+      - name: Build Bedrock packages
         shell: bash
         run: |
-          mkdir -p dist staging/MinecraftLabVehicle_BP staging/MinecraftLabVehicle_RP
-          cp -R packs/behavior_pack/. staging/MinecraftLabVehicle_BP/
-          cp -R packs/resource_pack/. staging/MinecraftLabVehicle_RP/
+          rm -rf dist staging
+          mkdir -p dist staging/bp staging/rp
+          cp -R packs/behavior_pack/. staging/bp/
+          cp -R packs/resource_pack/. staging/rp/
+
           (
-            cd staging
-            zip -qr ../dist/MinecraftLab-Vehicle-v0.1.0.mcaddon MinecraftLabVehicle_BP MinecraftLabVehicle_RP
+            cd staging/bp
+            zip -qr ../../dist/MinecraftLabVehicle_BP.mcpack .
           )
+          (
+            cd staging/rp
+            zip -qr ../../dist/MinecraftLabVehicle_RP.mcpack .
+          )
+          (
+            cd dist
+            zip -q MinecraftLab-Vehicle-v0.1.0.mcaddon               MinecraftLabVehicle_BP.mcpack MinecraftLabVehicle_RP.mcpack
+          )
+
           sha256sum dist/MinecraftLab-Vehicle-v0.1.0.mcaddon > dist/SHA256SUMS.txt
 
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
           name: MinecraftLab-Vehicle-v0.1.0
-          path: dist/*
+          path: |
+            dist/MinecraftLab-Vehicle-v0.1.0.mcaddon
+            dist/SHA256SUMS.txt
           if-no-files-found: error
