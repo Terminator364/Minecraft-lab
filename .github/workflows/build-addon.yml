@@ -83,7 +83,7 @@ jobs:
       - name: Official Bedrock Dedicated Server smoke oracle
         id: bds
         continue-on-error: true
-        timeout-minutes: 2
+        timeout-minutes: 5
         shell: bash
         run: |
           set -euo pipefail
@@ -93,7 +93,7 @@ jobs:
           echo "Official BDS URL resolved: $BDS_URL"
 
           mkdir -p bds
-          curl --http1.1 --fail --location             --connect-timeout 10 --max-time 70             --retry 1 --retry-delay 2 --retry-all-errors             --output bds/server.zip "$BDS_URL"
+          curl --http1.1 --fail --location             --connect-timeout 10 --max-time 220             --retry 1 --retry-delay 2 --retry-all-errors             --output bds/server.zip "$BDS_URL"
 
           unzip -q bds/server.zip -d bds
           chmod +x bds/bedrock_server
