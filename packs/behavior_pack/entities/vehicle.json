@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.80",
+  "format_version": "1.26.0",
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft_lab:vehicle",
@@ -9,45 +9,60 @@
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["minecraft_lab_vehicle", "vehicle"]
+        "family": ["minecraft_lab_vehicle", "vehicle", "car"]
       },
       "minecraft:collision_box": {
-        "width": 1.5,
-        "height": 1.15
+        "width": 2.75,
+        "height": 1.65
       },
       "minecraft:health": {
         "value": 40,
         "max": 40
       },
       "minecraft:movement": {
-        "value": 0.24
+        "value": 0.30
       },
       "minecraft:movement.basic": {
-        "max_turn": 8.0
+        "max_turn": 10.0
       },
       "minecraft:variable_max_auto_step": {
-        "base_value": 0.05,
-        "controlled_value": 0.05,
-        "jump_prevented_value": 0.05
+        "base_value": 0.0625,
+        "controlled_value": 0.0625,
+        "jump_prevented_value": 0.0625
       },
-      "minecraft:physics": {},
+      "minecraft:physics": {
+        "has_collision": true,
+        "push_towards_closest_space": false
+      },
       "minecraft:input_ground_controlled": {},
       "minecraft:rideable": {
-        "seat_count": 1,
+        "seat_count": 2,
         "controlling_seat": 0,
         "crouching_skip_interact": false,
+        "rider_can_interact": false,
         "family_types": ["player"],
-        "interact_text": "action.interact.mount",
+        "interact_text": "action.minecraft_lab.drive",
         "dismount_mode": "on_top_center",
         "seats": [
           {
-            "position": [0.0, 1.18, 0.25]
+            "position": [0.50, 0.55, 0.0]
+          },
+          {
+            "position": [-0.50, 0.55, 0.0]
           }
         ]
       },
       "minecraft:pushable": {
         "is_pushable": false,
         "is_pushable_by_piston": false
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "fall",
+            "deals_damage": "no"
+          }
+        ]
       },
       "minecraft:nameable": {}
     }

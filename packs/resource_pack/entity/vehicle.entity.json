@@ -7,10 +7,28 @@
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/entity/minecraft_lab_vehicle"
+        "default": "textures/entity/simple_car"
       },
       "geometry": {
-        "default": "geometry.minecraft_lab.vehicle"
+        "default": "geometry.simple_car"
+      },
+      "animations": {
+        "turn": "animation.simple_car.turn",
+        "idle": "animation.simple_car.idle",
+        "move": "animation.simple_car.move",
+        "move_back": "animation.simple_car.move_back",
+        "move_general": "controller.animation.simple_car.move_general"
+      },
+      "scripts": {
+        "pre_animation": [
+          "variable.moving_veh = query.modified_distance_moved;",
+          "variable.move_front = variable.moving_veh * 25;",
+          "variable.move_back = variable.moving_veh * -25;"
+        ],
+        "animate": [
+          "turn",
+          "move_general"
+        ]
       },
       "render_controllers": [
         "controller.render.default"

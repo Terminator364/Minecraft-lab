@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  vehicle-gates:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,8 +27,14 @@ jobs:
           for path in files:
               with path.open("r", encoding="utf-8") as f:
                   json.load(f)
-              print("OK", path)
+              print("JSON OK", path)
           PY
+
+      - name: Vehicle contract gate
+        run: python tests/vehicle_contract.py
+
+      - name: Anticipation matrix
+        run: python tests/anticipation_matrix.py
 
       - name: Build Bedrock packages
         shell: bash
@@ -40,24 +46,25 @@ jobs:
 
           (
             cd staging/bp
-            zip -qr ../../dist/MinecraftLabVehicle_BP.mcpack .
+            zip -qr ../../dist/MinecraftLabRoadCar_BP.mcpack .
           )
           (
             cd staging/rp
-            zip -qr ../../dist/MinecraftLabVehicle_RP.mcpack .
+            zip -qr ../../dist/MinecraftLabRoadCar_RP.mcpack .
           )
           (
             cd dist
-            zip -q MinecraftLab-Vehicle-v0.2.0.mcaddon MinecraftLabVehicle_BP.mcpack MinecraftLabVehicle_RP.mcpack
+            zip -q MinecraftLab-RoadCar-v0.3.0.mcaddon MinecraftLabRoadCar_BP.mcpack MinecraftLabRoadCar_RP.mcpack
           )
 
-          sha256sum dist/MinecraftLab-Vehicle-v0.2.0.mcaddon > dist/SHA256SUMS.txt
+          sha256sum dist/MinecraftLab-RoadCar-v0.3.0.mcaddon > dist/SHA256SUMS.txt
+          unzip -t dist/MinecraftLab-RoadCar-v0.3.0.mcaddon
 
-      - name: Upload build
+      - name: Upload candidate
         uses: actions/upload-artifact@v4
         with:
-          name: MinecraftLab-Vehicle-v0.2.0
+          name: MinecraftLab-RoadCar-v0.3.0
           path: |
-            dist/MinecraftLab-Vehicle-v0.2.0.mcaddon
+            dist/MinecraftLab-RoadCar-v0.3.0.mcaddon
             dist/SHA256SUMS.txt
           if-no-files-found: error

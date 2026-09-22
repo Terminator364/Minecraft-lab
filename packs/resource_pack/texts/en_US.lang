@@ -1,2 +1,3 @@
-entity.minecraft_lab:vehicle.name=Minecraft Lab Vehicle
-item.minecraft_lab:vehicle_item.name=Minecraft Lab Vehicle
+entity.minecraft_lab:vehicle.name=Minecraft Lab Car
+item.minecraft_lab:vehicle_item.name=Minecraft Lab Car
+action.minecraft_lab.drive=Drive

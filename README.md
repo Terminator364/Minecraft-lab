@@ -1,21 +1,30 @@
-# Minecraft Lab
+# Minecraft Lab — Road Car
 
-Prototype 0.2.0: road-focused vehicle for Minecraft Bedrock/mobile.
+Current candidate: **v0.3.0**
 
-## What changed
-- Replaced the blocky v0.1 body with a car-shaped model with four wheels, glass, lights, bumpers and roof.
-- Removed the automatic spawn egg from Creative inventory.
-- Added a dedicated **Véhicule Minecraft Lab** item that places the vehicle.
-- Reduced automatic step height to 0.05 blocks so the vehicle no longer climbs half-block terrain like a mount.
-- Slower turning and road-oriented movement.
-- Uses Minecraft's built-in localized mount prompt.
+This version replaces the hand-built block prototype with a proven Bedrock-ready car model/animation base from RMPlaysMCYT's MIT-licensed Vehicle Template, while deliberately replacing its horse/saddle behavior with Minecraft Lab's road-focused behavior.
 
-## Test
-1. Import `MinecraftLab-Vehicle-v0.2.0.mcaddon`.
-2. Activate **Minecraft Lab Vehicle BP** in a Creative world.
-3. Search Creative inventory for **Véhicule Minecraft Lab**.
-4. Use the item on a flat surface.
-5. Mount it and test it on a flat road, slabs/steps, grass and a full block obstacle.
+## Design goals
+- Looks like a car, not a generic rideable mob.
+- Dedicated placement item, no generic spawn egg.
+- No horse jump, saddle, taming, breeding, climbing or horse inventory mechanics.
+- Maximum automatic step: 0.0625 block (one Minecraft pixel).
+- Driver + one passenger.
+- Moving wheels / steering animation definitions.
+- French/English drive prompt.
 
-Fallback command:
-`/summon minecraft_lab:vehicle`
+## Install
+Use only the candidate placed in Google Drive:
+`Minecraft / À installer / MinecraftLab-RoadCar-v0.3.0.mcaddon`
+
+## Test on phone
+Physical Android test is intentionally small:
+1. import;
+2. activate the pack;
+3. place the car;
+4. mount it;
+5. drive on flat ground;
+6. attempt a slab/full-block obstacle;
+7. report visual/touch/camera issues.
+
+See `docs/SOURCES.md`, `docs/ANTICIPATIONS.md` and `THIRD_PARTY_NOTICES.md`.

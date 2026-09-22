@@ -1,23 +1,27 @@
 {
   "format_version": 2,
+  "metadata": {
+    "authors": ["Minecraft Lab"],
+    "product_type": "addon"
+  },
   "header": {
-    "name": "Minecraft Lab Vehicle BP",
-    "description": "Road vehicle prototype v0.2.0",
+    "name": "Minecraft Lab Road Car BP",
+    "description": "Road-focused car prototype v0.3.0",
     "uuid": "e7e4d5f8-8f95-4e74-9e90-15e649c01f90",
-    "version": [0, 2, 0],
-    "min_engine_version": [1, 21, 80]
+    "version": [0, 3, 0],
+    "min_engine_version": [1, 26, 0]
   },
   "modules": [
     {
       "type": "data",
       "uuid": "35bf4a16-5556-4a34-9bd0-20c867b485c4",
-      "version": [0, 2, 0]
+      "version": [0, 3, 0]
     }
   ],
   "dependencies": [
     {
       "uuid": "6a55a02d-40c3-41a6-8458-189d6d9f51bc",
-      "version": [0, 2, 0]
+      "version": [0, 3, 0]
     }
   ]
 }
