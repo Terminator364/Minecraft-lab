@@ -1,27 +1,29 @@
 # Minecraft Lab — ANTICIPATIONS
 
-## Project definition
-An **anticipation** is one concrete, traceable pre-delivery test or scenario intended to catch a real user-visible failure before the installable reaches the phone.
+## Canonical definition
+An anticipation is one concrete, traceable pre-delivery scenario/test intended to catch a real user-visible failure before the installable reaches the phone.
+It is not a repeated counter and not a marketing number.
 
-It is NOT:
-- a loop count with no semantic variation;
-- a repeated identical assertion;
-- a marketing number.
+## v0.4 mandatory gates
+- BP/RP versions and dependency match.
+- package structure valid.
+- placement item command-visible.
+- item explicitly registered in Creative Equipment > Minecarts.
+- crafting item catalog independently includes the item.
+- item points to the correct vehicle entity.
+- no custom atlas dependency is required for the v0.4 item icon.
+- Mojang vanilla minecart_normal icon key used.
+- localized name exists FR/EN.
+- no spawn egg exposed.
+- no horse/taming/breeding/jump/inventory components.
+- max auto-step <= 0.0625.
+- custom driver camera preset exists.
+- script module depends on @minecraft/server 2.0.0.
+- riding detection uses minecraft:riding.
+- camera set on entering and cleared on exit.
+- first-person render fallback hides cabin bones that blocked Android view.
 
-## Vehicle v0.3.0 gates
-The current car candidate must satisfy:
-1. pack structure and JSON parse;
-2. BP↔RP dependency/version consistency;
-3. entity is summonable but has no generic spawn egg;
-4. dedicated placer item exists;
-5. ground control exists;
-6. rideable driver seat exists;
-7. horse/saddle/taming/breeding/inventory/climbing mechanics are absent;
-8. automatic step height is at most 1 pixel (0.0625 block);
-9. car geometry, texture, wheel/steering animations resolve;
-10. localized drive prompt resolves in FR and EN;
-11. packaging is reproducible and includes both packs;
-12. road policy matrix passes for flat/low-profile surfaces and rejects step-like terrain.
-
-## Runtime truth
-Static/simulation gates do not claim to replace the Minecraft client. The final Android check remains limited to physical rendering, touch feel, camera/seat feel, and device performance.
+## Evidence classes
+STATIC_PASS: file/schema/semantic gates passed.
+BDS_PASS: official Bedrock Dedicated Server loaded candidate without relevant content errors.
+DEVICE_PENDING: visual/touch/camera behavior still requires the real Android client.

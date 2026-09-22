@@ -1,0 +1,17 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.minecraft_lab.vehicle": {
+      "geometry": "Geometry.default",
+      "materials": [{"*": "Material.default"}],
+      "textures": ["Texture.default"],
+      "part_visibility": [
+        {"body": "!query.is_first_person"},
+        {"top": "!query.is_first_person"},
+        {"door*": "!query.is_first_person"},
+        {"steering_wheel": "!query.is_first_person"},
+        {"lever": "!query.is_first_person"}
+      ]
+    }
+  }
+}

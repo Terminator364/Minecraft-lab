@@ -33,6 +33,9 @@ jobs:
       - name: Vehicle contract gate
         run: python tests/vehicle_contract.py
 
+      - name: Negative controls
+        run: python tests/negative_controls.py
+
       - name: Anticipation matrix
         run: python tests/anticipation_matrix.py
 
@@ -44,34 +47,25 @@ jobs:
           cp -R packs/behavior_pack/. staging/bp/
           cp -R packs/resource_pack/. staging/rp/
 
-          (
-            cd staging/bp
-            zip -qr ../../dist/MinecraftLabRoadCar_BP.mcpack .
-          )
-          (
-            cd staging/rp
-            zip -qr ../../dist/MinecraftLabRoadCar_RP.mcpack .
-          )
-          (
-            cd dist
-            zip -q MinecraftLab-RoadCar-v0.3.0.mcaddon MinecraftLabRoadCar_BP.mcpack MinecraftLabRoadCar_RP.mcpack
-          )
+          ( cd staging/rp && zip -qr ../../dist/01-MinecraftLab-RoadCar-RP-v0.4.0.mcpack . )
+          ( cd staging/bp && zip -qr ../../dist/02-MinecraftLab-RoadCar-BP-v0.4.0.mcpack . )
+          ( cd dist && zip -q MinecraftLab-RoadCar-v0.4.0.mcaddon 01-MinecraftLab-RoadCar-RP-v0.4.0.mcpack 02-MinecraftLab-RoadCar-BP-v0.4.0.mcpack )
 
-          sha256sum dist/MinecraftLab-RoadCar-v0.3.0.mcaddon > dist/SHA256SUMS.txt
-          unzip -t dist/MinecraftLab-RoadCar-v0.3.0.mcaddon
+          sha256sum dist/01-MinecraftLab-RoadCar-RP-v0.4.0.mcpack > dist/SHA256SUMS.txt
+          sha256sum dist/02-MinecraftLab-RoadCar-BP-v0.4.0.mcpack >> dist/SHA256SUMS.txt
+          sha256sum dist/MinecraftLab-RoadCar-v0.4.0.mcaddon >> dist/SHA256SUMS.txt
+          unzip -t dist/MinecraftLab-RoadCar-v0.4.0.mcaddon
 
-      # Important: GitHub Actions artifacts are themselves ZIP files.
-      # Upload only the two mcpack files so the downloaded artifact ZIP is
-      # directly a structurally valid mcaddon when renamed .mcaddon.
-      - name: Upload direct mcaddon payload
+      - name: Upload v0.4 candidate
         uses: actions/upload-artifact@v4
         with:
-          name: MinecraftLab-RoadCar-v0.3.0-DIRECT
+          name: MinecraftLab-RoadCar-v0.4.0
           path: |
-            dist/MinecraftLabRoadCar_BP.mcpack
-            dist/MinecraftLabRoadCar_RP.mcpack
+            dist/01-MinecraftLab-RoadCar-RP-v0.4.0.mcpack
+            dist/02-MinecraftLab-RoadCar-BP-v0.4.0.mcpack
+            dist/MinecraftLab-RoadCar-v0.4.0.mcaddon
+            dist/SHA256SUMS.txt
           if-no-files-found: error
-          compression-level: 6
 
   bds-smoke:
     needs: vehicle-gates
@@ -88,24 +82,17 @@ jobs:
         run: |
           set -euo pipefail
           LINKS_API="https://net-secondary.web.minecraft-services.net/api/v1.0/download/links"
-
-          BDS_URL="$(curl --fail --silent --show-error --location             --connect-timeout 10 --max-time 20 "$LINKS_API" |             python -c 'import json,sys; d=json.load(sys.stdin); print(next(x["downloadUrl"] for x in d["result"]["links"] if x["downloadType"]=="serverBedrockLinux"))')"
+          BDS_URL="$(curl --fail --silent --show-error --location --connect-timeout 10 --max-time 20 "$LINKS_API" | python -c 'import json,sys; d=json.load(sys.stdin); print(next(x["downloadUrl"] for x in d["result"]["links"] if x["downloadType"]=="serverBedrockLinux"))')"
           echo "Official BDS URL resolved: $BDS_URL"
 
           mkdir -p bds
-          curl --http1.1 --fail --location             --connect-timeout 10 --max-time 220             --retry 1 --retry-delay 2 --retry-all-errors             --output bds/server.zip "$BDS_URL"
-
+          curl --http1.1 --fail --location --connect-timeout 10 --max-time 220 --retry 1 --retry-delay 2 --retry-all-errors --output bds/server.zip "$BDS_URL"
           unzip -q bds/server.zip -d bds
           chmod +x bds/bedrock_server
           cd bds
 
           sed -i 's/^level-name=.*/level-name=RoadCarTest/' server.properties
           sed -i 's/^online-mode=.*/online-mode=false/' server.properties
-          if grep -q '^transport=' server.properties; then
-            sed -i 's/^transport=.*/transport=raknet/' server.properties
-          else
-            echo 'transport=raknet' >> server.properties
-          fi
 
           set +e
           timeout --signal=INT 12s env LD_LIBRARY_PATH=. ./bedrock_server > first_boot.log 2>&1
@@ -126,12 +113,8 @@ jobs:
           import json
           from pathlib import Path
           world = Path("worlds/RoadCarTest")
-          (world / "world_behavior_packs.json").write_text(
-              json.dumps([{"pack_id":"e7e4d5f8-8f95-4e74-9e90-15e649c01f90","version":[0,3,0]}]),
-              encoding="utf-8")
-          (world / "world_resource_packs.json").write_text(
-              json.dumps([{"pack_id":"6a55a02d-40c3-41a6-8458-189d6d9f51bc","version":[0,3,0]}]),
-              encoding="utf-8")
+          (world / "world_behavior_packs.json").write_text(json.dumps([{"pack_id":"e7e4d5f8-8f95-4e74-9e90-15e649c01f90","version":[0,4,0]}]),encoding="utf-8")
+          (world / "world_resource_packs.json").write_text(json.dumps([{"pack_id":"6a55a02d-40c3-41a6-8458-189d6d9f51bc","version":[0,4,0]}]),encoding="utf-8")
           PY
 
           set +e
@@ -139,15 +122,11 @@ jobs:
           PACK_STATUS=$?
           set -e
           cat pack_boot.log
-          if [ "$PACK_STATUS" -ne 0 ] && [ "$PACK_STATUS" -ne 124 ] && [ "$PACK_STATUS" -ne 130 ]; then
-            exit "$PACK_STATUS"
-          fi
-
+          if [ "$PACK_STATUS" -ne 0 ] && [ "$PACK_STATUS" -ne 124 ] && [ "$PACK_STATUS" -ne 130 ]; then exit "$PACK_STATUS"; fi
           if grep -Eiq 'failed to load.*pack|invalid.*manifest|unknown.*component|json.*error|syntax error' pack_boot.log; then
             echo "BDS detected a pack/runtime loading error"
             exit 1
           fi
-
           echo "BDS_SMOKE_PASS"
 
       - name: Report BDS oracle outcome

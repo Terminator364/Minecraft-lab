@@ -3,15 +3,9 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft_lab:vehicle",
-      "materials": {
-        "default": "entity_alphatest"
-      },
-      "textures": {
-        "default": "textures/entity/simple_car"
-      },
-      "geometry": {
-        "default": "geometry.simple_car"
-      },
+      "materials": {"default": "entity_alphatest"},
+      "textures": {"default": "textures/entity/simple_car"},
+      "geometry": {"default": "geometry.simple_car"},
       "animations": {
         "turn": "animation.simple_car.turn",
         "idle": "animation.simple_car.idle",
@@ -25,14 +19,9 @@
           "variable.move_front = variable.moving_veh * 25;",
           "variable.move_back = variable.moving_veh * -25;"
         ],
-        "animate": [
-          "turn",
-          "move_general"
-        ]
+        "animate": ["turn", "move_general"]
       },
-      "render_controllers": [
-        "controller.render.default"
-      ]
+      "render_controllers": ["controller.render.minecraft_lab.vehicle"]
     }
   }
 }
