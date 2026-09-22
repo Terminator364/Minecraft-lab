@@ -7,18 +7,14 @@
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/blocks/iron_block"
+        "default": "textures/entity/minecraft_lab_vehicle"
       },
       "geometry": {
         "default": "geometry.minecraft_lab.vehicle"
       },
       "render_controllers": [
         "controller.render.default"
-      ],
-      "spawn_egg": {
-        "base_color": "#6F747A",
-        "overlay_color": "#22262A"
-      }
+      ]
     }
   }
 }

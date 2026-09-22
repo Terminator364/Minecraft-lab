@@ -3,7 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft_lab:vehicle",
-      "is_spawnable": true,
+      "is_spawnable": false,
       "is_summonable": true,
       "is_experimental": false
     },
@@ -12,17 +12,24 @@
         "family": ["minecraft_lab_vehicle", "vehicle"]
       },
       "minecraft:collision_box": {
-        "width": 1.4,
-        "height": 1.25
+        "width": 1.5,
+        "height": 1.15
       },
       "minecraft:health": {
         "value": 40,
         "max": 40
       },
       "minecraft:movement": {
-        "value": 0.32
+        "value": 0.24
       },
-      "minecraft:movement.basic": {},
+      "minecraft:movement.basic": {
+        "max_turn": 8.0
+      },
+      "minecraft:variable_max_auto_step": {
+        "base_value": 0.05,
+        "controlled_value": 0.05,
+        "jump_prevented_value": 0.05
+      },
       "minecraft:physics": {},
       "minecraft:input_ground_controlled": {},
       "minecraft:rideable": {
@@ -30,16 +37,17 @@
         "controlling_seat": 0,
         "crouching_skip_interact": false,
         "family_types": ["player"],
-        "interact_text": "action.interact.ride",
+        "interact_text": "action.interact.mount",
+        "dismount_mode": "on_top_center",
         "seats": [
           {
-            "position": [0.0, 1.15, 0.15]
+            "position": [0.0, 1.18, 0.25]
           }
         ]
       },
       "minecraft:pushable": {
-        "is_pushable": true,
-        "is_pushable_by_piston": true
+        "is_pushable": false,
+        "is_pushable_by_piston": false
       },
       "minecraft:nameable": {}
     }

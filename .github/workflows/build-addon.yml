@@ -48,16 +48,16 @@ jobs:
           )
           (
             cd dist
-            zip -q MinecraftLab-Vehicle-v0.1.0.mcaddon               MinecraftLabVehicle_BP.mcpack MinecraftLabVehicle_RP.mcpack
+            zip -q MinecraftLab-Vehicle-v0.2.0.mcaddon MinecraftLabVehicle_BP.mcpack MinecraftLabVehicle_RP.mcpack
           )
 
-          sha256sum dist/MinecraftLab-Vehicle-v0.1.0.mcaddon > dist/SHA256SUMS.txt
+          sha256sum dist/MinecraftLab-Vehicle-v0.2.0.mcaddon > dist/SHA256SUMS.txt
 
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
-          name: MinecraftLab-Vehicle-v0.1.0
+          name: MinecraftLab-Vehicle-v0.2.0
           path: |
-            dist/MinecraftLab-Vehicle-v0.1.0.mcaddon
+            dist/MinecraftLab-Vehicle-v0.2.0.mcaddon
             dist/SHA256SUMS.txt
           if-no-files-found: error

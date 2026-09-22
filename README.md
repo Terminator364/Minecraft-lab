@@ -1,16 +1,21 @@
 # Minecraft Lab
 
-Prototype 0.1.0: a minimal rideable ground vehicle for Minecraft Bedrock/mobile.
+Prototype 0.2.0: road-focused vehicle for Minecraft Bedrock/mobile.
 
-## Goal
-Prove the complete pipeline with one vehicle before adding missions, combat, aircraft, or campaign systems.
+## What changed
+- Replaced the blocky v0.1 body with a car-shaped model with four wheels, glass, lights, bumpers and roof.
+- Removed the automatic spawn egg from Creative inventory.
+- Added a dedicated **Véhicule Minecraft Lab** item that places the vehicle.
+- Reduced automatic step height to 0.05 blocks so the vehicle no longer climbs half-block terrain like a mount.
+- Slower turning and road-oriented movement.
+- Uses Minecraft's built-in localized mount prompt.
 
-## Install
-1. Download `MinecraftLab-Vehicle-v0.1.0.mcaddon`.
-2. Open it with Minecraft.
-3. Create or edit a world and enable **Minecraft Lab Vehicle BP** under Behavior Packs. The Resource Pack is linked as a dependency.
-4. Use Creative inventory to find **Véhicule Minecraft Lab**, or enable cheats and run:
-   `/summon minecraft_lab:vehicle`
-5. Interact with the vehicle to ride it; use Minecraft's normal movement controls.
+## Test
+1. Import `MinecraftLab-Vehicle-v0.2.0.mcaddon`.
+2. Activate **Minecraft Lab Vehicle BP** in a Creative world.
+3. Search Creative inventory for **Véhicule Minecraft Lab**.
+4. Use the item on a flat surface.
+5. Mount it and test it on a flat road, slabs/steps, grass and a full block obstacle.
 
-The source packs are under `packs/`.
+Fallback command:
+`/summon minecraft_lab:vehicle`
