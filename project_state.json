@@ -1,14 +1,19 @@
 {
   "project": "Minecraft Lab",
-  "scope": "4x4 car",
-  "release": "1.0.0",
+  "scope": "road car baseline",
+  "release": "1.1.0",
   "status": "CANDIDATE_FIELD",
-  "head_parent": "238c0ed058c478743bc8dab71b636d2e6c5c08e5",
   "policy": "A+B+C / semantic anticipations / reuse-first",
-  "blocked_until_device_evidence": [
-    "A-P0-002 icon render",
-    "A-P0-004 driver visibility",
-    "A-P0-005 physical 4x4 terrain"
+  "regression_fixed_in_design": [
+    "C-008 lateral strafe",
+    "C-009 forced chase view",
+    "C-010 road-vs-4x4 ambiguity"
+  ],
+  "device_gates": [
+    "left steering yaw",
+    "right steering yaw",
+    "cockpit visibility",
+    "road/slab terrain feel"
   ],
   "delivery_rule": "One .mcaddon only"
 }

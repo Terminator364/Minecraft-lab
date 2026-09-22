@@ -8,16 +8,16 @@
       "is_experimental": false
     },
     "components": {
-      "minecraft:type_family": {"family":["minecraft_lab_vehicle","vehicle","car","offroad_4x4"]},
+      "minecraft:type_family": {"family":["minecraft_lab_vehicle","vehicle","car","road_car"]},
       "minecraft:scale": {"value":0.68},
       "minecraft:collision_box": {"width":1.95,"height":1.55},
-      "minecraft:health": {"value":60,"max":60},
-      "minecraft:movement": {"value":0.34},
-      "minecraft:movement.basic": {"max_turn":12.0},
+      "minecraft:health": {"value":50,"max":50},
+      "minecraft:movement": {"value":0.30},
+      "minecraft:movement.basic": {},
       "minecraft:variable_max_auto_step": {
-        "base_value": 1.25,
-        "controlled_value": 1.25,
-        "jump_prevented_value": 1.0
+        "base_value": 0.50,
+        "controlled_value": 0.50,
+        "jump_prevented_value": 0.50
       },
       "minecraft:physics": {"has_collision":true,"push_towards_closest_space":false},
       "minecraft:input_ground_controlled": {},
@@ -30,10 +30,10 @@
         "interact_text": "action.minecraft_lab.drive",
         "dismount_mode": "on_top_center",
         "seats": [
-          {"position":[0.33,0.86,-0.18],"lock_rider_rotation":0},
-          {"position":[-0.33,0.86,-0.18],"lock_rider_rotation":0},
-          {"position":[0.33,0.86,0.48],"lock_rider_rotation":0},
-          {"position":[-0.33,0.86,0.48],"lock_rider_rotation":0}
+          {"position":[0.34,0.62,0.00],"lock_rider_rotation":0},
+          {"position":[-0.34,0.62,0.00],"lock_rider_rotation":0},
+          {"position":[0.34,0.62,-0.68],"lock_rider_rotation":0},
+          {"position":[-0.34,0.62,-0.68],"lock_rider_rotation":0}
         ]
       },
       "minecraft:pushable": {"is_pushable":false,"is_pushable_by_piston":false},

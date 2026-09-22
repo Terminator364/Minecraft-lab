@@ -2,18 +2,18 @@
   "format_version": 2,
   "metadata": {"authors":["Minecraft Lab"],"product_type":"addon"},
   "header": {
-    "name": "Minecraft Lab 4x4 Car BP",
-    "description": "Production candidate 1.0.0",
+    "name": "Minecraft Lab Road Car BP",
+    "description": "Road car production candidate 1.1.0",
     "uuid": "e7e4d5f8-8f95-4e74-9e90-15e649c01f90",
-    "version": [1,0,0],
+    "version": [1,1,0],
     "min_engine_version": [1,26,0]
   },
   "modules": [
-    {"type":"data","uuid":"35bf4a16-5556-4a34-9bd0-20c867b485c4","version":[1,0,0]},
-    {"type":"script","uuid":"9ff06f7a-f47d-49e9-8aab-4e06b159809b","version":[1,0,0],"entry":"scripts/driver_camera.js"}
+    {"type":"data","uuid":"35bf4a16-5556-4a34-9bd0-20c867b485c4","version":[1,1,0]},
+    {"type":"script","uuid":"9ff06f7a-f47d-49e9-8aab-4e06b159809b","version":[1,1,0],"entry":"scripts/driver_camera.js"}
   ],
   "dependencies": [
-    {"uuid":"6a55a02d-40c3-41a6-8458-189d6d9f51bc","version":[1,0,0]},
+    {"uuid":"6a55a02d-40c3-41a6-8458-189d6d9f51bc","version":[1,1,0]},
     {"module_name":"@minecraft/server","version":"2.0.0"}
   ]
 }

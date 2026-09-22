@@ -1,0 +1,13 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:camera_preset": {
+    "identifier": "minecraft_lab:cockpit_drive",
+    "inherit_from": "minecraft:follow_orbit",
+    "control_scheme": "player_relative",
+    "radius": 0.12,
+    "entity_offset": [0.0, 0.28, 0.52],
+    "view_offset": [0.0, -0.04],
+    "starting_rot_x": 2.0,
+    "starting_rot_y": 0.0
+  }
+}

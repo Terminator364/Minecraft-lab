@@ -7,11 +7,10 @@ permissions:
   contents: read
 
 jobs:
-  production-gates:
+  road-car-gates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Validate JSON
         run: |
           python - <<'PY'
@@ -23,36 +22,30 @@ jobs:
           json.load(open("spec/anticipations.json",encoding="utf-8"))
           json.load(open("spec/requirements.json",encoding="utf-8"))
           PY
-
       - name: A+B+C truth gate
         run: python tests/spec_coverage.py
-
-      - name: Production QA
+      - name: Road car QA
         run: python tests/production_qa.py
-
       - name: JavaScript syntax
         run: node --check packs/behavior_pack/scripts/driver_camera.js
-
       - name: Negative controls
         run: python tests/negative_controls.py
-
-      - name: Package one-click mcaddon
+      - name: Package one-click
         run: |
           rm -rf dist staging
           mkdir -p dist staging/bp staging/rp
           cp -R packs/behavior_pack/. staging/bp/
           cp -R packs/resource_pack/. staging/rp/
-          (cd staging/bp && zip -qr ../../dist/MinecraftLab-4x4-Car-BP-1.0.0.mcpack .)
-          (cd staging/rp && zip -qr ../../dist/MinecraftLab-4x4-Car-RP-1.0.0.mcpack .)
-          (cd dist && zip -q MinecraftLab-4x4-Car-1.0.0.mcaddon MinecraftLab-4x4-Car-BP-1.0.0.mcpack MinecraftLab-4x4-Car-RP-1.0.0.mcpack)
-          unzip -t dist/MinecraftLab-4x4-Car-1.0.0.mcaddon
-          sha256sum dist/MinecraftLab-4x4-Car-1.0.0.mcaddon > dist/SHA256SUMS.txt
-
-      - name: Upload production candidate
+          (cd staging/bp && zip -qr ../../dist/MinecraftLab-RoadCar-BP-1.1.0.mcpack .)
+          (cd staging/rp && zip -qr ../../dist/MinecraftLab-RoadCar-RP-1.1.0.mcpack .)
+          (cd dist && zip -q MinecraftLab-RoadCar-1.1.0.mcaddon MinecraftLab-RoadCar-BP-1.1.0.mcpack MinecraftLab-RoadCar-RP-1.1.0.mcpack)
+          unzip -t dist/MinecraftLab-RoadCar-1.1.0.mcaddon
+          sha256sum dist/MinecraftLab-RoadCar-1.1.0.mcaddon > dist/SHA256SUMS.txt
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: MinecraftLab-4x4-Car-1.0.0
+          name: MinecraftLab-RoadCar-1.1.0
           path: |
-            dist/MinecraftLab-4x4-Car-1.0.0.mcaddon
+            dist/MinecraftLab-RoadCar-1.1.0.mcaddon
             dist/SHA256SUMS.txt
           if-no-files-found: error

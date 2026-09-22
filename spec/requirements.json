@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "Minecraft Lab",
-  "current_scope": "4x4 car production candidate 1.0.0",
+  "current_scope": "road car baseline 1.1.0",
   "release_policy": {
     "ready_requires_all_p0": true,
     "aggregate_test_count_is_not_release_evidence": true
@@ -41,43 +41,45 @@
       "id": "A-P0-003",
       "title": "Vehicle controls",
       "priority": "P0",
-      "acceptance": "Player can mount, steer and move using mobile controls without horse/taming UX.",
+      "acceptance": "Player can mount, move forward/reverse, and left/right input rotates the vehicle rather than producing lateral strafe.",
       "required_evidence": [
         "RUNTIME_PASS",
         "DEVICE_PASS"
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "Horse/taming components absent statically; mobile steering observed in earlier field builds."
+        "C-008: 1.0.0 field test showed lateral glide/strafe and no real left-right steering.",
+        "1.1.0 uses follow_orbit + player_relative control scheme, which maps left/right input to rotation; device proof pending."
       ]
     },
     {
       "id": "A-P0-004",
       "title": "Driver visibility",
       "priority": "P0",
-      "acceptance": "Default driving view exposes useful forward and lateral environment; cabin does not dominate the screen.",
+      "acceptance": "Default driver view is cockpit-like, sees the road clearly, and does not force an external third-person chase view.",
       "required_evidence": [
         "VISUAL_PASS",
         "DEVICE_PASS"
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "v0.4 Android screenshots proved prior failure.",
-        "1.0.0 changes to stable minecraft:third_person + periodic reassertion + visual scale 0.68; device proof still pending."
+        "C-005/C-009: earlier builds had obstructed interior or forced third-person.",
+        "1.1.0 uses near-zero follow_orbit radius 0.12 with forward entity offset to place camera near the windshield; device proof pending."
       ]
     },
     {
       "id": "A-P0-005",
-      "title": "4x4 terrain",
+      "title": "Road terrain policy",
       "priority": "P0",
-      "acceptance": "Vehicle crosses ordinary 1-block transitions and progressive rough mounds; vertical 2-block walls remain non-traversable.",
+      "acceptance": "Baseline road car traverses slabs/half-block transitions but does not auto-climb full 1-block walls; 4x4 is a separate later variant.",
       "required_evidence": [
         "RUNTIME_PASS",
         "DEVICE_PASS"
       ],
       "current_status": "PARTIAL",
       "evidence": [
-        "1.0.0 controlled auto-step 1.25 and terrain policy gates pass; Android physical terrain proof pending."
+        "C-010: user chose separation between normal road car and special 4x4 class.",
+        "1.1.0 max auto-step is 0.50 block; device road feel pending."
       ]
     },
     {
@@ -130,6 +132,20 @@
       "current_status": "STATIC_PASS",
       "evidence": [
         "This registry makes v0.5 a CANDIDATE, not READY."
+      ]
+    },
+    {
+      "id": "A-P1-010",
+      "title": "Dedicated 4x4 variant",
+      "priority": "P1",
+      "acceptance": "A separate off-road vehicle may use >=1.0 block step policy without changing the baseline road car.",
+      "required_evidence": [
+        "RUNTIME_PASS",
+        "DEVICE_PASS"
+      ],
+      "current_status": "UNTESTED",
+      "evidence": [
+        "Deferred intentionally after C-010 so road-car semantics remain clear."
       ]
     }
   ]

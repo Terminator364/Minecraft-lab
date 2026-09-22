@@ -1,31 +1,15 @@
-# Field findings — Vehicle
+# Field findings — Road Car
 
-## F-004 — icon invisible on Android
-Observed on v0.3/v0.4: item registration worked, but the icon was blank.
-Cause class: item icon key existed in behavior data without a guaranteed resource-pack texture mapping.
-v0.5 correction:
-- dedicated 64x64 PNG with transparency;
-- explicit resource-pack textures/item_texture.json mapping;
-- item uses the mapped key minecraft_lab_4x4_icon;
-- CI validates PNG dimensions, alpha/non-empty pixels, mapping and key equality.
+## C-008 — lateral glide / no steering
+1.0.0 Android field test: left/right produced lateral sliding instead of car-like yaw.
+Root cause class: the built-in third-person preset defaults to locked-player-relative-strafe. Microsoft documents that strafe schemes move left/right without turning.
+1.1.0 response: custom follow-orbit camera uses control_scheme=player_relative, where Microsoft documents that left/right rotates the player. Command fallback repeats player_relative.
 
-## F-005 — driver view obstructed
-Observed on v0.3/v0.4: rider remained visually trapped inside the cabin; v0.4 camera strategy did not prove effective on device.
-v0.5 correction:
-- built-in minecraft:third_person is forced while riding;
-- camera is reasserted every 10 ticks instead of only once;
-- command fallback exists if Script Camera setCamera fails;
-- camera clears on dismount/spawn recovery;
-- driver seat raised from 0.55 to 1.10 blocks as a physical fallback.
+## C-009 — forced exterior third person
+1.0.0 improved visibility but lost the desired cockpit sensation.
+1.1.0 response: near-zero follow-orbit radius (0.12) with a forward camera anchor near the windshield. The camera remains a follow-orbit preset so it can use player_relative steering semantics.
 
-## F-006 — road car cannot traverse Minecraft terrain
-Observed: 0.0625-block auto-step made ordinary terrain unusable.
-Requirement changed: this candidate is an OFF-ROAD 4x4.
-v0.5 correction:
-- controlled auto-step 1.25 blocks;
-- one-block ledges and block-by-block mounds are within policy;
-- a vertical two-block wall remains out of policy (not treated as a realistic mound).
-
-## F-007 — installation UX
-Observed: one-click .mcaddon is the only accepted delivery path.
-Status: retained as mandatory release gate.
+## C-010 — road car vs 4x4 semantics
+A normal car should remain road-oriented. Off-road auto-climb becomes a separate vehicle class.
+1.1.0 baseline road car max auto-step: 0.50 block.
+Dedicated 4x4 requirement moved to A-P1-010.

@@ -1,22 +1,14 @@
-# Minecraft Lab — 4x4 Car 1.0.0
+# Minecraft Lab — Road Car 1.1.0
 
-This is the first production-shaped vehicle candidate after the A+B+C reset.
+This release directly addresses the Android field regression where the previous chase camera caused left/right strafing instead of steering.
 
-## Product contract
-- one-click .mcaddon;
-- visible/searchable placement item;
-- no horse/taming UX;
-- stable built-in third-person camera while driving;
-- 4 seats;
-- 4x4 auto-step policy for one-block terrain;
-- visually scaled car body instead of the oversized cabin seen in earlier field screenshots;
-- source/licence traceability.
+Core decisions:
+- standard car = road car, max auto-step 0.50 block;
+- dedicated 4x4 becomes a separate later class;
+- cockpit-like camera = custom follow_orbit radius 0.12;
+- control scheme = player_relative so left/right rotates instead of strafes;
+- camera anchor shifted toward windshield for forward visibility;
+- one-click .mcaddon preserved.
 
-## Important truth state
-Internally this remains CANDIDATE_FIELD until the three device-only gates are observed on Android:
-1. actual icon rendering;
-2. actual driver visibility;
-3. actual 4x4 traversal.
-
-No micro-beta naming is exposed to the user. The installable is:
-MinecraftLab-4x4-Car-1.0.0.mcaddon
+Device acceptance for this release is intentionally narrow:
+left steer, right steer, forward/reverse, cockpit visibility, slab/road behavior.
