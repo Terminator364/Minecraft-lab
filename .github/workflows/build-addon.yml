@@ -60,6 +60,54 @@ jobs:
           sha256sum dist/MinecraftLab-RoadCar-v0.3.0.mcaddon > dist/SHA256SUMS.txt
           unzip -t dist/MinecraftLab-RoadCar-v0.3.0.mcaddon
 
+      - name: Official Bedrock Dedicated Server smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          BDS_VERSION="1.26.51.1"
+          BDS_URL="https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-${BDS_VERSION}.zip"
+
+          mkdir -p bds
+          curl --fail --location --retry 2 --output bds/server.zip "$BDS_URL"
+          unzip -q bds/server.zip -d bds
+          chmod +x bds/bedrock_server
+
+          cd bds
+          sed -i 's/^level-name=.*/level-name=RoadCarTest/' server.properties
+          sed -i 's/^online-mode=.*/online-mode=false/' server.properties
+
+          # First boot creates a valid Bedrock world.
+          { sleep 5; echo stop; } | env LD_LIBRARY_PATH=. ./bedrock_server > first_boot.log 2>&1 || true
+
+          mkdir -p behavior_packs/MinecraftLabRoadCar_BP
+          mkdir -p resource_packs/MinecraftLabRoadCar_RP
+          cp -R ../packs/behavior_pack/. behavior_packs/MinecraftLabRoadCar_BP/
+          cp -R ../packs/resource_pack/. resource_packs/MinecraftLabRoadCar_RP/
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          world = Path("worlds/RoadCarTest")
+          world.mkdir(parents=True, exist_ok=True)
+          (world / "world_behavior_packs.json").write_text(
+              json.dumps([{"pack_id":"e7e4d5f8-8f95-4e74-9e90-15e649c01f90","version":[0,3,0]}]),
+              encoding="utf-8")
+          (world / "world_resource_packs.json").write_text(
+              json.dumps([{"pack_id":"6a55a02d-40c3-41a6-8458-189d6d9f51bc","version":[0,3,0]}]),
+              encoding="utf-8")
+          PY
+
+          { sleep 7; echo list; sleep 1; echo stop; } | env LD_LIBRARY_PATH=. ./bedrock_server > pack_boot.log 2>&1
+          cat pack_boot.log
+
+          if grep -Eiq 'failed to load.*pack|invalid.*manifest|unknown.*component|json.*error|syntax error' pack_boot.log; then
+            echo "BDS detected a pack/runtime loading error"
+            exit 1
+          fi
+
+          grep -E 'Version|Server started|IPv4|IPv6' pack_boot.log || true
+          echo "BDS_SMOKE_PASS"
+
       - name: Upload candidate
         uses: actions/upload-artifact@v4
         with:
